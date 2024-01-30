@@ -9,10 +9,8 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import leoniPicture from '../assets/img/logo.jpg';
 
 function Copyright(props) {
   return (
@@ -32,6 +30,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const LoginPage = () => {
+  const logoPicture = 'assets/img/logo.jpg';
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -51,7 +50,7 @@ const LoginPage = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: `url(${leoniPicture})`,
+            backgroundImage: `url(${logoPicture})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -60,6 +59,7 @@ const LoginPage = () => {
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <img width='25%' src="assets/img/Leoni.png" />
           <Box
             sx={{
               my: 8,
@@ -69,9 +69,6 @@ const LoginPage = () => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
