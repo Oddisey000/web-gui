@@ -1,19 +1,20 @@
 const express = require('express');
-const sql = require('mssql');
+const sql = require('mssql/msnodesqlv8');
+const cors = require('cors')
 
 const app = express();
 const port = process.env.PORT || 3200;
 
 const config = {
-  user: process.env.DB_USER || 'statistic_user',
-  password: process.env.DB_PASSWORD || 'stat_usr_007',
-  server: process.env.DB_SERVER || "SVUA5PJ05.LEONI.LOCAL",
-  database: process.env.DB_DATABASE || 'BR206'
-
   /*user: process.env.DB_USER || 'statistic_user',
   password: process.env.DB_PASSWORD || 'stat_usr_007',
-  database: process.env.DB_DATABASE || 'testDB',
-  server: process.env.DB_SERVER || "WSUA5178\\SQLEXPRESS"*/
+  server: process.env.DB_SERVER || "SVUA5PJ05.LEONI.LOCAL",
+  database: process.env.DB_DATABASE || 'BR206'*/
+
+  user: process.env.DB_USER || 'oddisey',
+  password: process.env.DB_PASSWORD || '123',
+  database: process.env.DB_DATABASE || 'BMW_PLS',
+  server: process.env.DB_SERVER || "WSUA5178\\SQLEXPRESS"
 }
 
 app.use(cors());
