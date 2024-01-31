@@ -1,32 +1,11 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography} from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link target="_blank" href="https://www.leoni.com" rel="noreferrer">
-        Leoni
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import './login.page.component.scss';
 
-// TODO remove, this demo shouldn't need to reset the theme.
+import FooterComponent from '../../footer-component/footer.component';
 
 const defaultTheme = createTheme();
 
@@ -62,15 +41,16 @@ const LoginPage = () => {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
+              my: 0,
+              mt: 4,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: '#2196f3' }}>
+              <AccountCircleIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -108,16 +88,14 @@ const LoginPage = () => {
               >
                 Sign In
               </Button>
-              <Box>
                 <Typography component="h6" variant="h6"> In partnership with: </Typography>
                 <Link target="_blank" href="https://www.espi-logistics.de" rel="noreferrer">
-                  <img alt='ESPI logo' width='140px' height='140px' src="assets/img/espi.png" />
+                  <img alt='ESPI logo' className='partners_logo' src="assets/img/espi.png" />
                 </Link>
                 <Link target="_blank" href="https://www.wentronic.com" rel="noreferrer">
-                  <img alt='Wentronic logo' width='140px' height='140px' src="assets/img/wentronic.png" />
+                  <img alt='Wentronic logo' className='partners_logo' src="assets/img/wentronic.png" />
                 </Link>
-              </Box>
-              <Copyright sx={{ mt: 5 }} />
+              <FooterComponent/>
             </Box>
           </Box>
         </Grid>
