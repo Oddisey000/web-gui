@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography} from '@mui/material';
+import {Avatar, Button, CssBaseline, TextField, Link, Paper, Box, Grid, Typography} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -10,7 +10,7 @@ import FooterComponent from '../../footer-component/footer.component';
 const defaultTheme = createTheme();
 
 const LoginPage = () => {
-  const logoPicture = 'assets/img/logo.jpg';
+  const logoPicture = 'assets/img/logo.png';
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -75,10 +75,6 @@ const LoginPage = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
               />
               <Button
                 type="submit"
