@@ -6,20 +6,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import './login.page.component.scss';
 import FooterComponent from '../../footer-component/footer.component';
-import appReducer from '../../../redux/app-reducer/app.reducer';
+
+import { storeUserInfo } from "../../../redux/app-reducer/app-reducer.actions";
 
 const defaultTheme = createTheme();
 
-const LoginPage = () => {
+const LoginPage = ({ appReducer, storeUserInfo }) => {
+  React.useEffect(() => {console.log(appReducer.loggedInUser)});
+
   const logoPicture = 'assets/img/logo.png';
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('login'),
-      password: data.get('password'),
-      myData: appReducer.API_url
-    });
+    const loggedInUser = {name: document.getElementById("login").value, password: document.getElementById("password").value};
+    storeUserInfo(loggedInUser);
   };
 
   return (
@@ -62,7 +61,7 @@ const LoginPage = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="login"
                 label="Login"
                 name="login"
                 autoComplete="login"
@@ -110,7 +109,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getDataFromDB: (request) => dispatch()
+    storeUserInfo: (request) => dispatch(storeUserInfo(request))
   };
 };
 

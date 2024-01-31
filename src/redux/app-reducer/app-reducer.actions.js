@@ -4,7 +4,8 @@ import {
   GET_ORDER_NUMBERS,
   GET_EQUIPMENT_LIST,
   RESET_EQUIPMENT_LIST,
-  GET_DATA_FROM_DB
+  GET_DATA_FROM_DB,
+  GET_USER_INFO
 } from "./app-reducer.types";
 
 import { 
@@ -32,4 +33,9 @@ export const resetEquipmentList = () => ({
 export const getDataFromDB = (request) => ({
   type: GET_DATA_FROM_DB,
   payload: GetDataFromDB(request)
+});
+
+export const storeUserInfo = (userObj) => ({
+  type: GET_USER_INFO,
+  payload: userObj,
 });

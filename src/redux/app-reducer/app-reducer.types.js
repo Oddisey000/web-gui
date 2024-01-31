@@ -2,3 +2,5 @@ export const GET_ORDER_NUMBERS = "GET_ORDER_NUMBERS";
 export const GET_EQUIPMENT_LIST = "GET_EQUIPMENT_LIST";
 export const RESET_EQUIPMENT_LIST = "RESET_EQUIPMENT_LIST";
 export const GET_DATA_FROM_DB = "GET_DATA_FROM_DB";
+// newly added
+export const GET_USER_INFO = "GET_USER_INFO";

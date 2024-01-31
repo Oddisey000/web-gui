@@ -3,7 +3,8 @@ import {
   GET_ORDER_NUMBERS,
   GET_EQUIPMENT_LIST,
   RESET_EQUIPMENT_LIST,
-  GET_DATA_FROM_DB
+  GET_DATA_FROM_DB,
+  GET_USER_INFO
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -27,6 +28,11 @@ const appReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         tableRecordset: action.payload
+      };
+    case GET_USER_INFO:
+      return {
+        ...state,
+        loggedInUser: action.payload
       };
     default:
       return state;
