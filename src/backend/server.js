@@ -11,10 +11,10 @@ const config = {
   server: process.env.DB_SERVER || "SVUA5PJ05.LEONI.LOCAL",
   database: process.env.DB_DATABASE || 'BR206'*/
 
-  user: process.env.DB_USER || 'oddisey',
+  user: process.env.DB_USER || 'pevi5001',
   password: process.env.DB_PASSWORD || '123',
-  database: process.env.DB_DATABASE || 'BMW_PLS',
-  server: process.env.DB_SERVER || "WSUA5178\\SQLEXPRESS"
+  database: process.env.DB_DATABASE || 'LSMG3',
+  server: process.env.DB_SERVER || "10.112.130.27"
 }
 
 app.use(cors());

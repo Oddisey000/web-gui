@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { connect } from "react-redux";
 import {Avatar, Button, CssBaseline, TextField, Link, Paper, Box, Grid, Typography} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import './login.page.component.scss';
-
 import FooterComponent from '../../footer-component/footer.component';
+import appReducer from '../../../redux/app-reducer/app.reducer';
 
 const defaultTheme = createTheme();
 
@@ -17,6 +18,7 @@ const LoginPage = () => {
     console.log({
       email: data.get('login'),
       password: data.get('password'),
+      myData: appReducer.API_url
     });
   };
 
@@ -100,4 +102,16 @@ const LoginPage = () => {
   );
 }
 
-export default LoginPage
+const mapStateToProps = (state) => {
+  return {
+    appReducer: { ...state.appReducer }
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDataFromDB: (request) => dispatch()
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

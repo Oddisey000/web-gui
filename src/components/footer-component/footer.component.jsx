@@ -5,7 +5,7 @@ import {Typography, Container, Link} from '@mui/material';
 
 const defaultTheme = createTheme();
 
-function Copyright() {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
