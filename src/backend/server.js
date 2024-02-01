@@ -1,9 +1,10 @@
 const express = require('express');
 const sql = require('mssql/msnodesqlv8');
-const cors = require('cors')
+const cors = require('cors');
+const path = require("path");
 
 const app = express();
-const port = process.env.PORT || 3200;
+const port = process.env.PORT || 80;
 
 const config = {
   /*user: process.env.DB_USER || 'statistic_user',
@@ -18,17 +19,18 @@ const config = {
 }
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, '../../build')));
 
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   const productQuery = `SELECT DISTINCT drawing_number FROM workflow_statistic WHERE drawing_number LIKE '%MBR'`;
   const request = new sql.Request();
   request.query(productQuery, (err, result) => {
      if (err) res.status(500).send(err);
      res.send(result);
   });
-});
+});*/
 
-app.get('/order', (req, res) => {
+/*app.get('/order', (req, res) => {
   const reqParams = {
     orderID: req.query.order,
     equipmentID: req.query.equipment
@@ -94,7 +96,7 @@ app.get('/getequipment', (req, res) => {
      if (err) res.status(500).send(err);
      res.send(result);
   });
-});
+});*/
 
 sql.connect(config, err => {
   if (err) {
