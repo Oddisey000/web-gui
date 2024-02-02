@@ -4,9 +4,7 @@ import { styled } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-//import './normal.login.component.scss';
-
-const switchToNFC = () => {
+const switchToNormal = () => {
   document.getElementsByClassName('normal_dom_element')[0].style.display = 'block';
   document.getElementsByClassName('nfc_dom_element')[0].style.display = 'none';
 }
@@ -19,7 +17,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const NormalLogin = () => {
+const NFCLogin = () => {
   return(
     <React.Fragment>
       <TextField
@@ -37,7 +35,7 @@ const NormalLogin = () => {
           fullWidth
           variant="outlined"
           sx={{ mt: 3, mb: 2 }}
-          onClick={switchToNFC}
+          onClick={switchToNormal}
         >
           <ArrowBackIcon />
         </ColorButton>
@@ -46,4 +44,4 @@ const NormalLogin = () => {
   );
 }
 
-export default NormalLogin;
+export default NFCLogin;

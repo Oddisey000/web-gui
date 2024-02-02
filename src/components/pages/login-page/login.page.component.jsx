@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from "react-redux";
 import {Avatar, CssBaseline, Link, Paper, Box, Grid, Typography} from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import './login.page.component.scss';
@@ -53,10 +53,10 @@ const LoginPage = ({ appReducer, storeUserInfo }) => {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: '#2196f3' }}>
-              <AccountCircleIcon />
+              <LockOpenIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Log in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <div className='normal_dom_element'>

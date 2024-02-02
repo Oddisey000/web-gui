@@ -1,3 +1,12 @@
+.modal_title {
+  display: flex;
+  justify-content: center;
+}
+.modal_link {
+  cursor:pointer;
+  color:blue;
+  text-decoration:underline;
+}
 .login_buttons {
   display: flex;
   column-gap: .5rem;
