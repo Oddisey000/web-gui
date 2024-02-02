@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import {Avatar, Button, CssBaseline, TextField, Link, Paper, Box, Grid, Typography} from '@mui/material';
+import {Avatar, CssBaseline, Link, Paper, Box, Grid, Typography} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import './login.page.component.scss';
+import NormalLogin from './normal-login/normal.login.component';
+import NFCLogin from './nfc-login/nfc.login.component';
 import FooterComponent from '../../footer-component/footer.component';
 
 import { storeUserInfo } from "../../../redux/app-reducer/app-reducer.actions";
@@ -57,34 +59,12 @@ const LoginPage = ({ appReducer, storeUserInfo }) => {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="login"
-                label="Login"
-                name="login"
-                autoComplete="login"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
+              <div className='normal_dom_element'>
+                <NormalLogin />
+              </div>
+              <div className='nfc_dom_element'>
+                <NFCLogin />
+              </div>
                 <Typography component="h6" variant="h6"> In partnership with: </Typography>
                 <Link target="_blank" href="https://www.espi-logistics.de" rel="noreferrer">
                   <img alt='ESPI logo' className='partners_logo' src="assets/img/espi.png" />
