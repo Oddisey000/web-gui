@@ -1,5 +1,6 @@
 import * as React from 'react';
 import parse from 'html-react-parser';
+import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PropTypes from 'prop-types';
@@ -74,6 +75,7 @@ const style = {
 
 const NormalLogin = () => {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -85,7 +87,7 @@ const NormalLogin = () => {
     }, 100);
   }
 
-  const logginErrorMsg = () => {
+  const HandleLogin = () => {
     let login = document.getElementById('login').value;
     let password = document.getElementById('password').value;
     let nfc = document.getElementById('nfc_input').value;
@@ -97,6 +99,11 @@ const NormalLogin = () => {
         if (password === '') { modalErrorMsg += '<br>Please provide password'; }
         handleOpen();
       }
+    }
+
+    const serviceAccount = {name: 'service', password: 'init'};
+    if (login === serviceAccount.name && password === serviceAccount.password) {
+      navigate('config');
     }
   }
 
@@ -167,7 +174,7 @@ const NormalLogin = () => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
-          onClick={logginErrorMsg}
+          onClick={HandleLogin}
         >
           Log In
         </Button>

@@ -64,9 +64,11 @@ const ConfigurationPage = () => {
         </Toolbar>
       </AppBar>
       <Paper square sx={{
-        backgroundColor: 'ghostwhite'
+        backgroundColor: 'ghostwhite',
+        width: '100%',
+        minHeight: '100vh'
       }}>
-      <Container maxWidth={true} component="main" sx={{ mb: 4 }}>
+      <Container component="main" sx={{ mb: 4 }}>
         <Paper square={false} elevation={6} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h6" align="center">
             Welcome to LSMG 3 configurator
