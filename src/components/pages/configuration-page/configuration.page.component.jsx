@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from "react-redux";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,6 +17,8 @@ import ConfigReview from './config-review/config.review.component';
 
 import FooterComponent from '../../footer-component/footer.component';
 
+import { storeServerConfig } from '../../../redux/app-reducer/app-reducer.actions';
+
 import './configuration.page.component.scss';
 
 const steps = ['App initialization', 'Review configuration'];
@@ -31,10 +34,19 @@ function getStepContent(step) {
   }
 }
 
-const ConfigurationPage = () => {
+const ConfigurationPage = ({ storeServerConfig }) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
+    const serverConfig = {
+      serverName: document.getElementById('server_name').value,
+      sspi: false,
+      login: document.getElementById('server_account_name_text').value,
+      password: document.getElementById('server_account_password_text').value,
+      sqlFileName: '',
+      sqlFileContent: ''
+    };
+    storeServerConfig(serverConfig);
     setActiveStep(activeStep + 1);
   };
 
@@ -106,7 +118,7 @@ const ConfigurationPage = () => {
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                  {activeStep === steps.length - 1 ? 'Save results' : 'Next'}
                 </Button>
               </Box>
             </React.Fragment>
@@ -119,4 +131,16 @@ const ConfigurationPage = () => {
   );
 }
 
-export default ConfigurationPage;
+const mapStateToProps = (state) => {
+  return {
+    appReducer: { ...state.appReducer }
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    storeServerConfig: (request) => dispatch(storeServerConfig(request))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfigurationPage);

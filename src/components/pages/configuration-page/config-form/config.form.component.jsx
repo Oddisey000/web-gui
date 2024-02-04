@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from "react-redux";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -9,6 +10,9 @@ import FormLabel from '@mui/material/FormLabel';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+
+import { storeServerConfig } from '../../../../redux/app-reducer/app-reducer.actions';
+
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -22,13 +26,14 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const ConfigForm = () => {
-  const [isSSPI, setSSPI] = React.useState(true);
+const ConfigForm = ({ appReducer }) => {
+  console.log(appReducer.configurationData);
+  const [isSSPI, setSSPI] = React.useState(appReducer.configurationData.sspi);
   function HideServerAccountInput() {
-    setSSPI(true);
+    setSSPI(false);
   }
   function DisplayServerAccountInput() {
-    setSSPI(false);
+    setSSPI(true);
   }
 
   const fileInputHandler = (e) => {
@@ -56,6 +61,7 @@ const ConfigForm = () => {
             fullWidth
             autoComplete="Server name"
             variant="standard"
+            defaultValue={appReducer.configurationData.serverName}
           />
         </Grid>
         <Grid item xs={12}>
@@ -66,14 +72,14 @@ const ConfigForm = () => {
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
-            defaultValue={"lonig&password"}
+            defaultValue={appReducer.configurationData.sspi ? "SSPI" : "lonig&password"}
           >
             <FormControlLabel onClick={HideServerAccountInput} value="lonig&password" control={<Radio />} label="Login and password" />
             <FormControlLabel onClick={DisplayServerAccountInput} value="SSPI" control={<Radio />} label="SSPI" />
           </RadioGroup>
         </Grid>
         <>
-          {isSSPI ? (
+          {isSSPI == false ? (
             <>
               <Grid id="server_account_name" item xs={12} sm={6}>
                 <TextField
@@ -83,6 +89,7 @@ const ConfigForm = () => {
                   label="Server account name"
                   fullWidth
                   variant="standard"
+                  defaultValue={appReducer.configurationData.login}
                 />
               </Grid>
               <Grid id="server_account_password" item xs={12} sm={6}>
@@ -93,6 +100,7 @@ const ConfigForm = () => {
                   label="Server account password"
                   fullWidth
                   variant="standard"
+                  defaultValue={appReducer.configurationData.password}
                 />
               </Grid>
             </>
@@ -125,7 +133,12 @@ const ConfigForm = () => {
         <FormLabel sx={{display: 'flex', paddingTop: '1rem', paddingBottom: '1rem'}}>
           Please select SQL file
         </FormLabel>
-          <Button sx={{display: 'flex', width: 'fit-content'}} component="label" variant="contained" startIcon={<FileUploadIcon />}>
+          <Button 
+            sx={{display: 'flex', width: 'fit-content'}} 
+            component="label" 
+            variant="contained" 
+            startIcon={<FileUploadIcon />}
+          >
             Upload file
             <VisuallyHiddenInput onChange={fileInputHandler} id="sql_file" type="file" />
           </Button>
@@ -135,4 +148,16 @@ const ConfigForm = () => {
   );
 }
 
-export default ConfigForm;
+const mapStateToProps = (state) => {
+  return {
+    appReducer: { ...state.appReducer }
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfigForm);

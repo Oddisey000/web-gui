@@ -4,7 +4,8 @@ import {
   GET_EQUIPMENT_LIST,
   RESET_EQUIPMENT_LIST,
   GET_DATA_FROM_DB,
-  SET_USER_INFO
+  SET_USER_INFO,
+  SET_SERVER_CONFIG
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +34,11 @@ const appReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loggedInUser: action.payload
+      };
+    case SET_SERVER_CONFIG:
+      return {
+        ...state,
+        configurationData: action.payload
       };
     default:
       return state;
