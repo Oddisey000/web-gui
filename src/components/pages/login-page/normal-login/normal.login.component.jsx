@@ -1,6 +1,7 @@
 import * as React from 'react';
 import parse from 'html-react-parser';
 import { useNavigate } from 'react-router-dom';
+import { connect } from "react-redux";
 import { Button, TextField } from '@mui/material';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PropTypes from 'prop-types';
@@ -11,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 
 import './normal.login.component.scss';
+
+import { storeUserInfo } from '../../../../redux/app-reducer/app-reducer.actions';
 
 let modalErrorMsg = '';
 
@@ -73,7 +76,7 @@ const style = {
   p: 4,
 };
 
-const NormalLogin = () => {
+const NormalLogin = ({ appReducer, storeUserInfo }) => {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
@@ -102,8 +105,13 @@ const NormalLogin = () => {
     }
 
     const serviceAccount = {name: 'service', password: 'init'};
-    if (login === serviceAccount.name && password === serviceAccount.password) {
-      navigate('config');
+    if (login !== '' && password !== '') {
+      if (login === serviceAccount.name && password === serviceAccount.password) {
+        navigate('config');
+      } else {
+        navigate('main');
+      }
+      storeUserInfo({name: login, password: password});
     }
   }
 
@@ -157,6 +165,7 @@ const NormalLogin = () => {
         name="login"
         autoComplete="login"
         autoFocus
+        defaultValue={appReducer.loggedInUser.name}
       />
       <TextField
         margin="normal"
@@ -167,6 +176,7 @@ const NormalLogin = () => {
         type="password"
         id="password"
         autoComplete="current-password"
+        defaultValue={appReducer.loggedInUser.password}
       />
       <div className='login_buttons'>
         <Button
@@ -193,5 +203,16 @@ const NormalLogin = () => {
     </React.Fragment>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    appReducer: { ...state.appReducer }
+  };
+};
 
-export default NormalLogin;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    storeUserInfo: (request) => dispatch(storeUserInfo(request))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NormalLogin);

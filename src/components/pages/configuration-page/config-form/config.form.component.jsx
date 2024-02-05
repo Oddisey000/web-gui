@@ -26,8 +26,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const ConfigForm = ({ appReducer }) => {
-  console.log(appReducer.configurationData);
+const ConfigForm = ({ appReducer, storeServerConfig }) => {
   const [isSSPI, setSSPI] = React.useState(appReducer.configurationData.sspi);
   function HideServerAccountInput() {
     setSSPI(false);
@@ -43,6 +42,15 @@ const ConfigForm = ({ appReducer }) => {
     reader.onload = () => {
       //alert(file.name);
       //alert(reader.result);
+      const serverConfig = {
+        serverName: document.getElementById('server_name').value,
+        sspi: false,
+        login: document.getElementById('server_account_name_text').value,
+        password: document.getElementById('server_account_password_text').value,
+        sqlFileName: file.name,
+        sqlFileContent: reader.result
+      };
+      storeServerConfig(serverConfig);
     }
   }
 
@@ -79,7 +87,7 @@ const ConfigForm = ({ appReducer }) => {
           </RadioGroup>
         </Grid>
         <>
-          {isSSPI == false ? (
+          {isSSPI === false ? (
             <>
               <Grid id="server_account_name" item xs={12} sm={6}>
                 <TextField
@@ -156,7 +164,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    storeServerConfig: (request) => dispatch(storeServerConfig(request))
   };
 };
 

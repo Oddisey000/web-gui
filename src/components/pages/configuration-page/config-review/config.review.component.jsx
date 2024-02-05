@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Grid from '@mui/material/Grid';
 
 const ConfigReview = ({ appReducer }) => {
   return (
@@ -28,6 +27,10 @@ const ConfigReview = ({ appReducer }) => {
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary='Password' secondary='database user password' />
           <Typography variant="body2">{appReducer.configurationData.password}</Typography>
+        </ListItem>
+        <ListItem sx={{ py: 1, px: 0 }}>
+          <ListItemText primary='SQL file' secondary='Selected SQL file' />
+          <Typography variant="body2">{appReducer.configurationData.sqlFileName}</Typography>
         </ListItem>
       </List>
     </React.Fragment>

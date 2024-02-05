@@ -34,20 +34,22 @@ function getStepContent(step) {
   }
 }
 
-const ConfigurationPage = ({ storeServerConfig }) => {
+const ConfigurationPage = ({appReducer, storeServerConfig }) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
-    const serverConfig = {
-      serverName: document.getElementById('server_name').value,
-      sspi: false,
-      login: document.getElementById('server_account_name_text').value,
-      password: document.getElementById('server_account_password_text').value,
-      sqlFileName: '',
-      sqlFileContent: ''
-    };
-    storeServerConfig(serverConfig);
-    setActiveStep(activeStep + 1);
+    if (activeStep < 1) {
+      const serverConfig = {
+        serverName: document.getElementById('server_name').value,
+        sspi: false,
+        login: document.getElementById('server_account_name_text').value,
+        password: document.getElementById('server_account_password_text').value,
+        sqlFileName: appReducer.configurationData.sqlFileName,
+        sqlFileContent: appReducer.configurationData.sqlFileContent
+      };
+      storeServerConfig(serverConfig);
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {

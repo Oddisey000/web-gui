@@ -1,32 +1,33 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { connect } from "react-redux";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Chart from './chart/chart.component';
 import Orders from './order/order.component';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Drawer from '@mui/material/Drawer';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
+import FooterComponent from '../../footer-component/footer.component';
+
+import { storeUserInfo } from '../../../redux/app-reducer/app-reducer.actions';
 
 const drawerWidth = 240;
 
@@ -51,17 +52,80 @@ const AppBar = styled(MuiAppBar, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const MainPage = () => {
+const MainPage = ({ appReducer, storeUserInfo }) => {
+  const navigate = useNavigate();
+
+  function HandleLogOut() {
+    storeUserInfo({name: '', password: ''});
+    navigate('/');
+  }
+
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Dashboard'} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ManageAccountsIcon />
+            </ListItemIcon>
+            <ListItemText primary={'ManageAccounts'} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box width='100vw' sx={{ display: 'flex' }}>
+      <Box zIndex='99' width='100vw' sx={{ display: 'flex' }}>
         <CssBaseline />
+        <Drawer
+        anchor={'left'}
+        open={state['left']}
+        onClose={toggleDrawer('left', false)}
+        zIndex='100'
+      >
+        {list('left')}
+      </Drawer>
         <AppBar position="absolute">
           <Toolbar>
             <IconButton
               edge="start"
               color="inherit"
               aria-label="open drawer"
+              onClick={toggleDrawer('left', true)}
             >
               <MenuIcon />
             </IconButton>
@@ -75,9 +139,7 @@ const MainPage = () => {
               Dashboard
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+                <LockOpenIcon onClick={HandleLogOut} />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -90,7 +152,7 @@ const MainPage = () => {
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
-            overflow: 'auto',
+            overflow: 'none',
           }}
         >
           <Toolbar />
@@ -127,11 +189,23 @@ const MainPage = () => {
                 </Paper>
               </Grid>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
+            <FooterComponent />
         </Box>
       </Box>
     </ThemeProvider>
   );
 }
 
-export default MainPage;
+const mapStateToProps = (state) => {
+  return {
+    appReducer: { ...state.appReducer }
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    storeUserInfo: (request) => dispatch(storeUserInfo(request))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
