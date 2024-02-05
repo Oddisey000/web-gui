@@ -3,6 +3,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {Typography, Container, Link} from '@mui/material';
 
+import './footer.component.scss';
+
 const defaultTheme = createTheme();
 
 const Copyright = () => {
@@ -22,7 +24,7 @@ const FooterComponent = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
-          <Container maxWidth="sm">
+          <Container className='sa' maxWidth="sm">
             <Copyright />
           </Container>
     </ThemeProvider>

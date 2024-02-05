@@ -8,11 +8,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import Chart from './chart/chart.component';
-import Orders from './order/order.component';
 
 import Drawer from '@mui/material/Drawer';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -51,8 +47,13 @@ const AppBar = styled(MuiAppBar, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const MainPage = ({ appReducer, storeUserInfo }) => {
+const UserPage = ({ appReducer, storeUserInfo }) => {
   const navigate = useNavigate();
+
+  function HandleLogOut() {
+    storeUserInfo({name: '', password: ''});
+    navigate('/');
+  }
 
   function HandleMain() {
     navigate('../main');
@@ -64,11 +65,6 @@ const MainPage = ({ appReducer, storeUserInfo }) => {
 
   function HandleUser() {
     navigate('../user');
-  }
-
-  function HandleLogOut() {
-    storeUserInfo({name: '', password: ''});
-    navigate('/');
   }
 
   const [state, setState] = React.useState({
@@ -178,39 +174,6 @@ const MainPage = ({ appReducer, storeUserInfo }) => {
           }}
         >
           <Toolbar />
-            <Grid padding={(1)} container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
-            </Grid>
         </Box>
       </Box>
     </ThemeProvider>
@@ -229,4 +192,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
