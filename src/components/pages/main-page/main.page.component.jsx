@@ -26,6 +26,9 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 
+import UserComponent from './user/user.component';
+import MaintenanceComponent from './maintenance/maintenance.component';
+
 import { storeUserInfo } from '../../../redux/app-reducer/app-reducer.actions';
 
 const drawerWidth = 240;
@@ -52,18 +55,66 @@ const AppBar = styled(MuiAppBar, {
 const defaultTheme = createTheme();
 
 const MainPage = ({ appReducer, storeUserInfo }) => {
+  const [drawerState, setdrawerState] = React.useState(0);
   const navigate = useNavigate();
 
+  const BodyElement = () => {
+    switch (drawerState) {
+      case 0:
+        return(
+          <Grid padding={(1)} container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 240,
+                }}
+              >
+                <Chart />
+              </Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 240,
+                }}
+              >
+              </Paper>
+            </Grid>
+            {/* Recent Orders */}
+            <Grid item xs={12}>
+              <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Orders />
+              </Paper>
+            </Grid>
+          </Grid>
+        );
+      case 1:
+        return(<UserComponent />)
+      case 2:
+        return(<MaintenanceComponent />)
+      default:
+        return(<></>)
+    }
+  }
+
   function HandleMain() {
-    navigate('../main');
+    setdrawerState(0);
   }
 
   function HandleMaintenance() {
-    navigate('../maintenance');
+    setdrawerState(2);
   }
 
   function HandleUser() {
-    navigate('../user');
+    setdrawerState(1);
   }
 
   function HandleLogOut() {
@@ -160,8 +211,8 @@ const MainPage = ({ appReducer, storeUserInfo }) => {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-                <LockOpenIcon onClick={HandleLogOut} />
+            <IconButton onClick={HandleLogOut} color="inherit">
+                <LockOpenIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -178,39 +229,7 @@ const MainPage = ({ appReducer, storeUserInfo }) => {
           }}
         >
           <Toolbar />
-            <Grid padding={(1)} container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
-            </Grid>
+            <BodyElement />
         </Box>
       </Box>
     </ThemeProvider>
