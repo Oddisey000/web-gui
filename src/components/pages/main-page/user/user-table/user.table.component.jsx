@@ -2,40 +2,40 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
-  { field: 'firstName', headerName: 'First name', width: 150 },
-  { field: 'lastName', headerName: 'Last name', width: 150 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 60,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
+  { field: 'id', headerName: 'ID', display: 'none' },
+  { field: 'login', headerName: 'Login' },
+  { field: 'role', headerName: 'User role', width: 130 },
+  { field: 'isActive', headerName: 'Active user' },
+  { field: 'nfcCode', headerName: 'NFC/RFID code' },
+  { field: 'dateCreated', headerName: 'Created on' },
+  { field: 'createdBy', headerName: 'Created by' },
+  { field: 'dateModified', headerName: 'Modified on' },
+  { field: 'modifiedBy', headerName: 'Modified by' },
+  { field: 'description',
+    headerName: 'Description',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
     width: 130,
     valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+      `${params.row.login || ''} ${params.row.role || ''}`,
   },
 ];
 
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  { id: 0, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 1, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 2, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 3, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 4, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 5, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 6, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 7, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
+  { id: 8, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
 ];
 
 export default function DataTable() {
   return (
-    <div style={{ height: '89vh', width: '100%' }}>
+    <div style={{ height: '89vh' }}>
       <DataGrid
         style={{ display: 'flex', alignItems: 'center' }}
         rows={rows}
@@ -46,7 +46,6 @@ export default function DataTable() {
           },
         }}
         pageSizeOptions={[5, 10, 20, 50, 100]}
-        checkboxSelection
       />
     </div>
   );
