@@ -153,20 +153,20 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
               </Typography>
               <Typography id="spring-modal-description" sx={{ mt: 2 }}>
                 {parse(modalErrorMsg)} 
-                <Typography id="spring-modal-description" sx={{ mt: 1 }}>
-                  Consider using:
-                </Typography>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  color="secondary"
-                  onClick={HandleModalButton}
-                  >
-                  RFID/NFC
-                </Button>
               </Typography>
+              <Typography id="spring-modal-description" sx={{ mt: 1 }}>
+                Consider using:
+              </Typography>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="secondary"
+                onClick={HandleModalButton}
+                >
+                  RFID/NFC
+              </Button>
             </Box>
           </Fade>
         </Modal>
