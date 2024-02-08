@@ -13,7 +13,8 @@ import {
   GetOrdersInfo,
   GetEquipmentInfo,
   ResetEquipmentInfo,
-  GetDataFromDB
+  GetDataFromDB,
+  StoreUserInfo
 } from "./app-reducer.utils";
 
 export const getOrdersFromDB = () => ({
@@ -36,9 +37,9 @@ export const getDataFromDB = (request) => ({
   payload: GetDataFromDB(request)
 });
 
-export const storeUserInfo = (userObj) => ({
+export const storeUserInfo = (request) => ({
   type: SET_USER_INFO,
-  payload: userObj
+  payload: StoreUserInfo(request)
 });
 
 export const storeServerConfig = (confObj) => ({

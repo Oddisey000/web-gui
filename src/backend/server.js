@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require("path");
 
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3200;
 
 const config = {
   /*user: process.env.DB_USER || 'statistic_user',
@@ -14,21 +14,25 @@ const config = {
 
   user: process.env.DB_USER || 'pevi5001',
   password: process.env.DB_PASSWORD || '123',
-  database: process.env.DB_DATABASE || 'LSMG3',
-  server: process.env.DB_SERVER || "10.112.130.27"
+  server: process.env.DB_SERVER || '10.112.130.27',
+  database: process.env.DB_DATABASE || 'LSMG3'
 }
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../../build')));
 
-/*app.get('/', (req, res) => {
-  const productQuery = `SELECT DISTINCT drawing_number FROM workflow_statistic WHERE drawing_number LIKE '%MBR'`;
+app.get('/authentication', (req, res) => {
+  const reqParams = {
+    userName: req.query.login,
+    userPassword: req.query.password
+  };
+  const query = `SELECT Name FROM Employee WHERE Name = '${reqParams.userName}' AND Password = CAST('${reqParams.userPassword}' as varbinary)`;
   const request = new sql.Request();
-  request.query(productQuery, (err, result) => {
+  request.query(query, (err, result) => {
      if (err) res.status(500).send(err);
      res.send(result);
   });
-});*/
+});
 
 /*app.get('/order', (req, res) => {
   const reqParams = {

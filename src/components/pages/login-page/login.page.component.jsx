@@ -14,13 +14,13 @@ import { storeUserInfo } from "../../../redux/app-reducer/app-reducer.actions";
 const defaultTheme = createTheme();
 
 const LoginPage = ({ appReducer, storeUserInfo }) => {
-  React.useEffect(() => {console.log(appReducer.loggedInUser)});
+  React.useEffect(() => {console.log(appReducer)});
 
   const logoPicture = 'assets/img/logo.png';
   const handleSubmit = (event) => {
     event.preventDefault();
-    const loggedInUser = {name: document.getElementById("login").value, password: document.getElementById("password").value};
-    storeUserInfo(loggedInUser);
+    //const loggedInUser = {name: document.getElementById("login").value, password: document.getElementById("password").value};
+    //storeUserInfo(loggedInUser);
   };
 
   return (

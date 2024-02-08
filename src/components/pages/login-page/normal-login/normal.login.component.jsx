@@ -109,9 +109,9 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
       if (login === serviceAccount.name && password === serviceAccount.password) {
         navigate('config');
       } else {
-        navigate('main');
+        //navigate('main');
       }
-      storeUserInfo({name: login, password: password});
+      storeUserInfo(`${appReducer.API_url}authentication?login=${login}&password=${password}`);
     }
   }
 
@@ -165,7 +165,7 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
         name="login"
         autoComplete="login"
         autoFocus
-        defaultValue={appReducer.loggedInUser.name}
+        defaultValue={''}
       />
       <TextField
         margin="normal"
@@ -176,7 +176,6 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
         type="password"
         id="password"
         autoComplete="current-password"
-        defaultValue={appReducer.loggedInUser.password}
       />
       <div className='login_buttons'>
         <Button
