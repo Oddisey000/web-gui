@@ -14,8 +14,6 @@ import { storeUserInfo } from "../../../redux/app-reducer/app-reducer.actions";
 const defaultTheme = createTheme();
 
 const LoginPage = ({ appReducer, storeUserInfo }) => {
-  React.useEffect(() => {console.log(appReducer)});
-
   const logoPicture = 'assets/img/logo.png';
   const handleSubmit = (event) => {
     event.preventDefault();

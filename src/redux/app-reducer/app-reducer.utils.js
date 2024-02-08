@@ -34,7 +34,6 @@ export const StoreUserInfo = (request) => {
     try {
       const response = await axios.get(request);
       loggedInUser.Name = response.data.recordset[0].Name
-      console.log(loggedInUser)
     } catch (error) {
       console.log(error);
     }

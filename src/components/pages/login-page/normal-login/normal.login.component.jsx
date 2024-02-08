@@ -77,6 +77,10 @@ const style = {
 };
 
 const NormalLogin = ({ appReducer, storeUserInfo }) => {
+  React.useEffect(() => {setTimeout(() => {
+    HandleRedirect()
+  }, 100)});
+
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
@@ -88,6 +92,12 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
     setTimeout(() => {
       document.getElementById('nfc_input').focus();
     }, 100);
+  }
+
+  const HandleRedirect = () => {
+    if (appReducer.loggedInUser.Name) {
+      navigate('main');
+    }
   }
 
   const HandleLogin = () => {
@@ -108,10 +118,15 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
     if (login !== '' && password !== '') {
       if (login === serviceAccount.name && password === serviceAccount.password) {
         navigate('config');
-      } else {
-        //navigate('main');
       }
       storeUserInfo(`${appReducer.API_url}authentication?login=${login}&password=${password}`);
+      setTimeout(() => {
+        if (!appReducer.loggedInUser.Name) {
+          modalErrorMsg = '';
+          modalErrorMsg += 'Your login or password incorrect';
+          handleOpen();
+        }
+      }, 200);
     }
   }
 
