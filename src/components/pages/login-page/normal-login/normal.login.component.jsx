@@ -126,7 +126,7 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
           modalErrorMsg += 'Your login or password incorrect';
           handleOpen();
         }
-      }, 200);
+      }, 400);
     }
   }
 

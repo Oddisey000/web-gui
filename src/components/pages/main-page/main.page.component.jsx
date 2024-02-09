@@ -182,13 +182,13 @@ const MainPage = ({ appReducer, storeUserInfo }) => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box zIndex='99' width='100vw' sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', zIndex: '99', width: '100vw' }}>
         <CssBaseline />
         <Drawer
         anchor={'left'}
         open={state['left']}
         onClose={toggleDrawer('left', false)}
-        zIndex='100'
+        sx={{zIndex: '100'}}
       >
         {list('left')}
       </Drawer>
@@ -225,11 +225,12 @@ const MainPage = ({ appReducer, storeUserInfo }) => {
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
-            overflow: 'none',
+            overflow: 'auto',
+            minWidth: '100vw%'
           }}
         >
           <Toolbar />
-            <BodyElement />
+          <BodyElement />
         </Box>
       </Box>
     </ThemeProvider>
