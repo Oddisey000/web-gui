@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material';
+
+import './user.table.component.scss';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 130 },
+  { field: 'id', headerName: 'ID', width: 130, hide: true },
   { field: 'login', headerName: 'Login' },
   { field: 'role', headerName: 'User role', width: 130 },
   { field: 'isActive', headerName: 'Active user', width: 130 },
@@ -12,6 +15,14 @@ const columns = [
   { field: 'dateModified', headerName: 'Modified on', width: 130 },
   { field: 'modifiedBy', headerName: 'Modified by', width: 130 },
   { field: 'description', headerName: 'Description', width: 200 },
+  { field: 'button-edit', headerName: 'Edit User', width: 130,  renderCell: (params) => {
+    // you will find row info in params
+    return <Button variant="outlined" color="success">Edit</Button>
+ } },
+  { field: 'button-delete', headerName: 'Delete User', width: 130,  renderCell: (params) => {
+    // you will find row info in params
+    return <Button variant="outlined" color="error">Delete</Button>
+  } },
 ];
 
 const rows = [
@@ -38,6 +49,12 @@ export default function DataTable() {
         rows={rows}
         columns={columns}
         initialState={{
+          columns: {
+            columnVisibilityModel: {
+              // Hide columns status and traderName, the other columns will remain visible
+              id: false,
+            },
+          },
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },
           },

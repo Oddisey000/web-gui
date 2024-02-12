@@ -79,7 +79,7 @@ const style = {
 const NormalLogin = ({ appReducer, storeUserInfo }) => {
   React.useEffect(() => {setTimeout(() => {
     HandleRedirect()
-  }, 100)});
+  }, 100);});
 
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
@@ -126,7 +126,7 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
           modalErrorMsg += 'Your login or password incorrect';
           handleOpen();
         }
-      }, 400);
+      }, 10000);
     }
   }
 
