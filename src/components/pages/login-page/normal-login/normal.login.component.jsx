@@ -95,7 +95,7 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
   }
 
   const HandleRedirect = () => {
-    if (appReducer.loggedInUser.Name) {
+    if (appReducer.loggedInUser.name) {
       navigate('main');
     }
   }
@@ -121,7 +121,7 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
       }
       storeUserInfo(`${appReducer.API_url}authentication?login=${login}&password=${password}`);
       setTimeout(() => {
-        if (!appReducer.loggedInUser.Name) {
+        if (!appReducer.loggedInUser.name) {
           modalErrorMsg = '';
           modalErrorMsg += 'Your login or password incorrect';
           handleOpen();

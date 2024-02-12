@@ -29,7 +29,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import UserComponent from './user/user.component';
 import MaintenanceComponent from './maintenance/maintenance.component';
 
-import { storeUserInfo } from '../../../redux/app-reducer/app-reducer.actions';
+import { storeUserInfo, storeUserList } from '../../../redux/app-reducer/app-reducer.actions';
 
 const drawerWidth = 240;
 
@@ -54,8 +54,28 @@ const AppBar = styled(MuiAppBar, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const MainPage = ({ appReducer, storeUserInfo }) => {
-  const [drawerState, setdrawerState] = React.useState(0);
+const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
+  const startComponent = () => {
+    storeUserList(`${appReducer.API_url}getuserlist`);
+    switch(appReducer.loggedInUser.role) {
+      case 0: 
+        return 1;
+      case 1: 
+        return 0;
+      case 2: 
+        return 2;
+      case 3: 
+        return 1;
+      case 4: 
+        return 0;
+      case 5: 
+        return 0;
+      default: 
+        return 0;
+    }
+  };
+
+  const [drawerState, setdrawerState] = React.useState(startComponent);
   const navigate = useNavigate();
 
   const BodyElement = () => {
@@ -245,7 +265,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    storeUserInfo: (request) => dispatch(storeUserInfo(request))
+    storeUserInfo: (request) => dispatch(storeUserInfo(request)),
+    storeUserList: (request) => dispatch(storeUserList(request))
   };
 };
 

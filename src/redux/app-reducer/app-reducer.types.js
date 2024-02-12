@@ -5,3 +5,4 @@ export const GET_DATA_FROM_DB = "GET_DATA_FROM_DB";
 // new values
 export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_SERVER_CONFIG = "SET_SERVER_CONFIG";
+export const SET_USER_LIST = "SET_USER_LIST";

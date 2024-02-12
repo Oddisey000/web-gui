@@ -26,7 +26,19 @@ app.get('/authentication', (req, res) => {
     userName: req.query.login,
     userPassword: req.query.password
   };
-  const query = `SELECT Name FROM Employee WHERE Name = '${reqParams.userName}' AND Password = CAST('${reqParams.userPassword}' as varbinary)`;
+  const query = `SELECT Name, Role FROM Employee WHERE Name = '${reqParams.userName}' AND Password = CAST('${reqParams.userPassword}' as varbinary)`;
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+     if (err) res.status(500).send(err);
+     res.send(result);
+  });
+});
+
+app.get('/getuserlist', (req, res) => {
+  const query = 
+  `SELECT t1.ID as id, t1.Name AS login, t2.Description AS Role, t1.IsActive, t1.NFCcode, t1.DateCreated, t1.CreatedBy, t1.DateModified, t1.ModifiedBy, t1.Description
+    FROM Employee AS t1
+      JOIN EmployeeRoleDefinition AS t2 ON t1.Role = t2.Role`;
   const request = new sql.Request();
   request.query(query, (err, result) => {
      if (err) res.status(500).send(err);

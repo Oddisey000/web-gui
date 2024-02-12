@@ -6,7 +6,8 @@ import {
   RESET_EQUIPMENT_LIST,
   GET_DATA_FROM_DB,
   SET_USER_INFO,
-  SET_SERVER_CONFIG
+  SET_SERVER_CONFIG,
+  SET_USER_LIST
 } from "./app-reducer.types";
 
 import { 
@@ -14,7 +15,8 @@ import {
   GetEquipmentInfo,
   ResetEquipmentInfo,
   GetDataFromDB,
-  StoreUserInfo
+  StoreUserInfo,
+  GetUserList
 } from "./app-reducer.utils";
 
 export const getOrdersFromDB = () => ({
@@ -45,4 +47,9 @@ export const storeUserInfo = (request) => ({
 export const storeServerConfig = (confObj) => ({
   type: SET_SERVER_CONFIG,
   payload: confObj
+});
+
+export const storeUserList = (request) => ({
+  type: SET_USER_LIST,
+  payload: GetUserList(request)
 });
