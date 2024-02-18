@@ -13,7 +13,7 @@ import { useSpring, animated } from '@react-spring/web';
 
 import './normal.login.component.scss';
 
-import { storeUserInfo } from '../../../../redux/app-reducer/app-reducer.actions';
+import { storeUserInfo, storeUserList } from '../../../../redux/app-reducer/app-reducer.actions';
 
 let modalErrorMsg = '';
 
@@ -76,10 +76,8 @@ const style = {
   p: 4,
 };
 
-const NormalLogin = ({ appReducer, storeUserInfo }) => {
-  React.useEffect(() => {setTimeout(() => {
-    HandleRedirect()
-  }, 100);});
+const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
+  React.useEffect(() => {HandleRedirect()});
 
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
@@ -95,8 +93,17 @@ const NormalLogin = ({ appReducer, storeUserInfo }) => {
   }
 
   const HandleRedirect = () => {
-    if (appReducer.loggedInUser.name) {
-      navigate('main');
+    var interval = setInterval(doStuff, 100);
+    function doStuff() {
+      if (appReducer.loggedInUser.name) {
+        storeUserList(`${appReducer.API_url}getuserlist`);
+        if (appReducer.userlist) {
+          clearInterval(interval)
+          setTimeout(() => {
+            navigate('main');
+          }, 100);
+        }
+      }
     }
   }
 
@@ -225,7 +232,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    storeUserInfo: (request) => dispatch(storeUserInfo(request))
+    storeUserInfo: (request) => dispatch(storeUserInfo(request)),
+    storeUserList: (request) => dispatch(storeUserList(request))
   };
 };
 

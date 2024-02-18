@@ -14,7 +14,8 @@ const config = {
 
   user: process.env.DB_USER || 'pevi5001',
   password: process.env.DB_PASSWORD || '123',
-  server: process.env.DB_SERVER || '10.112.130.27',
+  //server: process.env.DB_SERVER || '10.112.130.27',
+  server: process.env.DB_SERVER || 'DESKTOP-B0FAKTM\\SQLEXPRESS',
   database: process.env.DB_DATABASE || 'LSMG3'
 }
 

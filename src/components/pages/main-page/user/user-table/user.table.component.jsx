@@ -26,25 +26,12 @@ const columns = [
   } },
 ];
 
-/*const rows = [
-  { id: 0, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 1, login: 'movi5001', role: 'Operator', isActive: 'Yes', nfcCode: '437291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Antony KM44'},
-  { id: 2, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 3, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 4, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 5, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 6, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 7, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-  { id: 8, login: 'pevi5001', role: 'Administrator', isActive: 'Yes', nfcCode: '427291', dateCreated: '08.05.2024', createdBy: 'pevi5001', dateModified: '', modifiedBy: '', description: 'Vitalii KM45'},
-];*/
-
 const handleRowClick = (params) => {
   console.log(params);
 }
 
 const UserListComponent = ({ appReducer }) => {
   let rows = [];
-
   appReducer.userlist.map(element => {
     let obj = {
       id: element.id,

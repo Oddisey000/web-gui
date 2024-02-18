@@ -56,7 +56,7 @@ const defaultTheme = createTheme();
 
 const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
   const startComponent = () => {
-    storeUserList(`${appReducer.API_url}getuserlist`);
+    //storeUserList(`${appReducer.API_url}getuserlist`);
     switch(appReducer.loggedInUser.role) {
       case 0: 
         return 1;
