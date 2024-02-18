@@ -1,36 +1,39 @@
 import * as React from 'react';
+import { connect } from "react-redux";
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
-import { connect } from "react-redux";
 
 import './user.table.component.scss';
 
+// Setup table's columns parameters and buttons
 const columns = [
-  { field: 'ID', headerName: 'ID', width: 130, hide: true },
+  { field: 'ID', headerName: 'ID', hide: true },
   { field: 'login', headerName: 'Login' },
   { field: 'Role', headerName: 'User role', width: 130 },
-  { field: 'IsActive', headerName: 'Active user', width: 130 },
-  { field: 'NFCcode', headerName: 'NFC/RFID code', width: 130 },
-  { field: 'DateCreated', headerName: 'Created on', width: 130 },
-  { field: 'CreatedBy', headerName: 'Created by', width: 130 },
-  { field: 'DateModified', headerName: 'Modified on', width: 130 },
-  { field: 'ModifiedBy', headerName: 'Modified by', width: 130 },
+  { field: 'IsActive', headerName: 'Active user' },
+  { field: 'NFCcode', headerName: 'NFC/RFID code', width: 120 },
+  { field: 'DateCreated', headerName: 'Created on', width: 100 },
+  { field: 'CreatedBy', headerName: 'Created by', width: 100 },
+  { field: 'DateModified', headerName: 'Modified on', width: 100 },
+  { field: 'ModifiedBy', headerName: 'Modified by', width: 100 },
   { field: 'Description', headerName: 'Description', width: 200 },
-  { field: 'button-edit', headerName: 'Edit User', width: 130,  renderCell: (params) => {
+  { field: 'button-edit', headerName: 'Edit User', width: 110,  renderCell: (params) => {
     // you will find row info in params
     return <Button variant="outlined" color="success">Edit</Button>
  } },
-  { field: 'button-delete', headerName: 'Delete User', width: 130,  renderCell: (params) => {
+  { field: 'button-delete', headerName: 'Delete User', width: 110,  renderCell: (params) => {
     // you will find row info in params
     return <Button variant="outlined" color="error">Delete</Button>
   } },
 ];
+
 
 const handleRowClick = (params) => {
   console.log(params);
 }
 
 const UserListComponent = ({ appReducer }) => {
+  // Generate rows based on data from application state
   let rows = [];
   appReducer.userlist.map(element => {
     let obj = {
@@ -72,6 +75,7 @@ const UserListComponent = ({ appReducer }) => {
   );
 }
 
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }

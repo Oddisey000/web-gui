@@ -4,11 +4,13 @@ import { styled } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+// Hide NFC type of loggin and display login and password form
 const switchToNormal = () => {
   document.getElementsByClassName('normal_dom_element')[0].style.display = 'block';
   document.getElementsByClassName('nfc_dom_element')[0].style.display = 'none';
 }
 
+// Styles of NFC button
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(deepOrange[500]),
   backgroundColor: deepOrange[500],

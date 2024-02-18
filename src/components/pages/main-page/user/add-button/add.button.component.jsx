@@ -1,21 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import Modal from '@mui/material/Modal';
-import PropTypes from 'prop-types';
-import Backdrop from '@mui/material/Backdrop';
-import Typography from '@mui/material/Typography';
+import { Box, Fab, Modal, Backdrop, Typography, InputLabel, MenuItem, FormControl, Select, Grid, Button, TextField } from '@mui/material';
 import { useSpring, animated } from '@react-spring/web';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Grid from '@mui/material/Grid';
+import PropTypes from 'prop-types';
+import AddIcon from '@mui/icons-material/Add';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
-import { Button, TextField } from '@mui/material';
 
+// Modal window initial parameters
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -70,6 +61,7 @@ const style = {
 };
 
 const FloatingActionButtons = () => {
+  // Handle modal window state
   const [open, setOpen] = React.useState(false);
   const [userGroup, setuserGroup] = React.useState('');
   const handleOpen = () => setOpen(true);

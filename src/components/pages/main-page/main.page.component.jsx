@@ -1,38 +1,24 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 import { connect } from "react-redux";
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, Box, Toolbar, Typography, IconButton, Grid, Paper, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
-import Chart from './chart/chart.component';
-import Orders from './order/order.component';
-
-import Drawer from '@mui/material/Drawer';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 
+import Chart from './chart/chart.component';
+import Orders from './order/order.component';
 import UserComponent from './user/user.component';
 import MaintenanceComponent from './maintenance/maintenance.component';
 
 import { storeUserInfo, storeUserList } from '../../../redux/app-reducer/app-reducer.actions';
 
+// Styling properties of App drawer (right navigation bar)
 const drawerWidth = 240;
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -51,12 +37,11 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
+  // Define starting point based on user account role level
   const startComponent = () => {
-    //storeUserList(`${appReducer.API_url}getuserlist`);
     switch(appReducer.loggedInUser.role) {
       case 0: 
         return 1;
@@ -78,6 +63,7 @@ const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
   const [drawerState, setdrawerState] = React.useState(startComponent);
   const navigate = useNavigate();
 
+  // Default elements on the main page + additional routes like maintenance and user management
   const BodyElement = () => {
     switch (drawerState) {
       case 0:
@@ -125,23 +111,24 @@ const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
     }
   }
 
+  // Array of function which help application to navigate betwwen different tabs (maintenance, user, etc)
   function HandleMain() {
     setdrawerState(0);
   }
-
   function HandleMaintenance() {
     setdrawerState(2);
   }
-
   function HandleUser() {
     setdrawerState(1);
   }
 
+  // Reset logged in user info and redirect user to the main page
   function HandleLogOut() {
-    storeUserInfo({name: '', password: ''});
+    storeUserInfo({name: '', role: ''});
     navigate('/');
   }
 
+  // Hide drawer when page loaded
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -149,6 +136,7 @@ const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
     right: false,
   });
 
+  // Open drawer event controls
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -157,6 +145,7 @@ const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
     setState({ ...state, [anchor]: open });
   };
 
+  // Drawer list component with all of the routes
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -257,6 +246,7 @@ const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
   );
 }
 
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }

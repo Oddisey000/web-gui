@@ -1,11 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
+import { Backdrop, Box, Modal, Typography } from '@mui/material';
 import { useSpring, animated } from '@react-spring/web';
 
+// Configuration of error modal window
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -80,12 +78,8 @@ const LoginError = ({ title, message }) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="spring-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+            <Typography id="spring-modal-title" variant="h6" component="h2"></Typography>
+            <Typography id="spring-modal-description" sx={{ mt: 2 }}></Typography>
           </Box>
         </Fade>
       </Modal>

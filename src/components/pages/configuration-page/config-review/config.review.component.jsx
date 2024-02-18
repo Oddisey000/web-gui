@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import { Typography, List, ListItem, ListItemText } from '@mui/material';
 
 const ConfigReview = ({ appReducer }) => {
   return (
@@ -37,6 +34,7 @@ const ConfigReview = ({ appReducer }) => {
   );
 }
 
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }

@@ -15,11 +15,7 @@ const defaultTheme = createTheme();
 
 const LoginPage = ({ appReducer, storeUserInfo }) => {
   const logoPicture = 'assets/img/logo.png';
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    //const loggedInUser = {name: document.getElementById("login").value, password: document.getElementById("password").value};
-    //storeUserInfo(loggedInUser);
-  };
+  const handleSubmit = (event) => { event.preventDefault() };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -79,6 +75,7 @@ const LoginPage = ({ appReducer, storeUserInfo }) => {
   );
 }
 
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }

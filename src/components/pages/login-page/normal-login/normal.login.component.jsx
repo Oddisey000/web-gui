@@ -2,26 +2,25 @@ import * as React from 'react';
 import parse from 'html-react-parser';
 import { useNavigate } from 'react-router-dom';
 import { connect } from "react-redux";
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Backdrop, Box, Modal, Typography } from '@mui/material';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PropTypes from 'prop-types';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 
 import './normal.login.component.scss';
 
 import { storeUserInfo, storeUserList } from '../../../../redux/app-reducer/app-reducer.actions';
 
+// A variable which represent different error messages in modal window
 let modalErrorMsg = '';
 
+// If user chouse to loggin with NFC from modal error window, this function will hide login and password inputs
 const switchToNFC = () => {
   document.getElementsByClassName('normal_dom_element')[0].style.display = 'none';
   document.getElementsByClassName('nfc_dom_element')[0].style.display = 'block';
 }
 
+// A modal related styles and settings
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -79,11 +78,13 @@ const style = {
 const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
   React.useEffect(() => {HandleRedirect()});
 
+  // Initial state of error modal window
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // If during error user chouse to login with NFC, this function will hide normal login method and display NFC login
   const HandleModalButton = () => {
     handleClose();
     switchToNFC();
@@ -92,6 +93,7 @@ const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
     }, 100);
   }
 
+  // During login process this function check if login was successfull and load data of registered users into application state
   const HandleRedirect = () => {
     var interval = setInterval(doStuff, 100);
     function doStuff() {
@@ -107,6 +109,7 @@ const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
     }
   }
 
+  // Taking inserted data from corresponded fields and inform user with modal window in case of errors
   const HandleLogin = () => {
     let login = document.getElementById('login').value;
     let password = document.getElementById('password').value;
@@ -121,6 +124,8 @@ const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
       }
     }
 
+    // Handle configuration page redirection if specific login and password provided
+    // Additionaly handle error message if user provide non existing credentials
     const serviceAccount = {name: 'service', password: 'init'};
     if (login !== '' && password !== '') {
       if (login === serviceAccount.name && password === serviceAccount.password) {
@@ -224,6 +229,8 @@ const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
     </React.Fragment>
   );
 }
+
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }

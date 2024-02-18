@@ -1,9 +1,5 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import Title from '../title/title.component';
 
 // Generate Order Data
@@ -53,10 +49,6 @@ const rows = [
     'pevi5001'
   ),
 ];
-
-/*function preventDefault(event) {
-  event.preventDefault();
-}*/
 
 export default function Orders() {
   return (

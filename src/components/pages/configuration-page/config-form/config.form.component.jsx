@@ -1,19 +1,11 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormLabel from '@mui/material/FormLabel';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+import { Grid, Typography, TextField, FormControlLabel, Radio, RadioGroup, FormLabel, styled, Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 import { storeServerConfig } from '../../../../redux/app-reducer/app-reducer.actions';
 
-
+// Prevent to show real file input form and showing styled button instead
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -28,6 +20,8 @@ const VisuallyHiddenInput = styled('input')({
 
 const ConfigForm = ({ appReducer, storeServerConfig }) => {
   const [isSSPI, setSSPI] = React.useState(appReducer.configurationData.sspi);
+
+  // Conditionally display or hide login and password for SQL server
   function HideServerAccountInput() {
     setSSPI(false);
   }
@@ -35,13 +29,12 @@ const ConfigForm = ({ appReducer, storeServerConfig }) => {
     setSSPI(true);
   }
 
+  // Collecting all of the information and storing this into application state
   const fileInputHandler = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => {
-      //alert(file.name);
-      //alert(reader.result);
       const serverConfig = {
         serverName: document.getElementById('server_name').value,
         sspi: false,
@@ -156,6 +149,7 @@ const ConfigForm = ({ appReducer, storeServerConfig }) => {
   );
 }
 
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }

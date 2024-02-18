@@ -1,28 +1,18 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
+import { CssBaseline, AppBar, Box, Container, Toolbar, Paper, Stepper, Step, StepLabel, Button, Link, Typography, } from '@mui/material';
+
+import './configuration.page.component.scss';
 import ConfigForm from './config-form/config.form.component';
 import ConfigReview from './config-review/config.review.component';
-
 import FooterComponent from '../../footer-component/footer.component';
 
 import { storeServerConfig } from '../../../redux/app-reducer/app-reducer.actions';
 
-import './configuration.page.component.scss';
-
+// Define how many steps should be available during configuration process
 const steps = ['App initialization', 'Review configuration'];
 
+// This function controll 2 different components, intial configuration page and checkout page
 function getStepContent(step) {
   switch (step) {
     case 0:
@@ -37,6 +27,7 @@ function getStepContent(step) {
 const ConfigurationPage = ({appReducer, storeServerConfig }) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
+  // Collect all of the data user provided during configuration process and handle switchig to the next step
   const handleNext = () => {
     if (activeStep < 1) {
       const serverConfig = {
@@ -52,6 +43,7 @@ const ConfigurationPage = ({appReducer, storeServerConfig }) => {
     }
   };
 
+  // Return to previous step
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -96,14 +88,8 @@ const ConfigurationPage = ({appReducer, storeServerConfig }) => {
           </Stepper>
           {activeStep === steps.length ? (
             <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
+              <Typography variant="h5" gutterBottom></Typography>
+              <Typography variant="subtitle1"></Typography>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -133,6 +119,7 @@ const ConfigurationPage = ({appReducer, storeServerConfig }) => {
   );
 }
 
+// A few function below are necessary for redux implementation
 const mapStateToProps = (state) => {
   return {
     appReducer: { ...state.appReducer }
