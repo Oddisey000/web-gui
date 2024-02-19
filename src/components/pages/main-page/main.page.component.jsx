@@ -40,6 +40,9 @@ const AppBar = styled(MuiAppBar, {
 const defaultTheme = createTheme();
 
 const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
+  React.useEffect(() => {
+    if (appReducer.loggedInUser.name == '') { navigate('/') }
+  });
   // Define starting point based on user account role level
   const startComponent = () => {
     switch(appReducer.loggedInUser.role) {

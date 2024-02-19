@@ -5,34 +5,34 @@ import { Button } from '@mui/material';
 
 import './user.table.component.scss';
 
-// Setup table's columns parameters and buttons
-const columns = [
-  { field: 'ID', headerName: 'ID', hide: true },
-  { field: 'login', headerName: 'Login' },
-  { field: 'Role', headerName: 'User role', width: 130 },
-  { field: 'IsActive', headerName: 'Active user' },
-  { field: 'NFCcode', headerName: 'NFC/RFID code', width: 120 },
-  { field: 'DateCreated', headerName: 'Created on', width: 100 },
-  { field: 'CreatedBy', headerName: 'Created by', width: 100 },
-  { field: 'DateModified', headerName: 'Modified on', width: 100 },
-  { field: 'ModifiedBy', headerName: 'Modified by', width: 100 },
-  { field: 'Description', headerName: 'Description', width: 200 },
-  { field: 'button-edit', headerName: 'Edit User', width: 110,  renderCell: (params) => {
-    // you will find row info in params
-    return <Button variant="outlined" color="success">Edit</Button>
- } },
-  { field: 'button-delete', headerName: 'Delete User', width: 110,  renderCell: (params) => {
-    // you will find row info in params
-    return <Button variant="outlined" color="error">Delete</Button>
-  } },
-];
-
-
-const handleRowClick = (params) => {
-  console.log(params);
-}
+import EditButtonComponent from '../edit-button/edit.button.component';
 
 const UserListComponent = ({ appReducer }) => {
+  React.useEffect(() => {rows = appReducer.userlist});
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+
+  // Setup table's columns parameters and buttons
+  const columns = [
+    { field: 'ID', headerName: 'ID', hide: true },
+    { field: 'login', headerName: 'Login' },
+    { field: 'Role', headerName: 'User role', width: 130 },
+    { field: 'IsActive', headerName: 'Active user' },
+    { field: 'NFCcode', headerName: 'NFC/RFID code', width: 120 },
+    { field: 'DateCreated', headerName: 'Created on', width: 100 },
+    { field: 'CreatedBy', headerName: 'Created by', width: 100 },
+    { field: 'DateModified', headerName: 'Modified on', width: 100 },
+    { field: 'ModifiedBy', headerName: 'Modified by', width: 100 },
+    { field: 'Description', headerName: 'Description', width: 200 },
+    { field: 'button-edit', headerName: 'Edit User', width: 110,  renderCell: (params) => {
+      // you will find row info in params
+      return <EditButtonComponent {...params} />
+  } },
+    { field: 'button-delete', headerName: 'Delete User', width: 110,  renderCell: (params) => {
+      // you will find row info in params
+      return <Button variant="outlined" color="error">Delete</Button>
+    } },
+  ];
+  
   // Generate rows based on data from application state
   let rows = [];
   appReducer.userlist.map(element => {
@@ -46,10 +46,30 @@ const UserListComponent = ({ appReducer }) => {
       CreatedBy: element.CreatedBy,
       DateModified: element.DateModified,
       ModifiedBy: element.ModifiedBy,
-      Description: element.ModifiedBy,
+      Description: element.Description,
+      AccessLevel: element.AccessLevel
     };
     rows.push(obj);
+    return rows;
   })
+
+  const handleRowClick = (params) => {
+    //appReducer.userlist.splice(params.id - 1, 1);
+    forceUpdate();
+  }
+
+  const HandleButtons = (params) => {
+    if (params.field == 'button-edit') {
+      //alert('You clicked edit button')
+      forceUpdate();
+    }
+    if (params.field == 'button-delete') {
+      const index = rows.findIndex(row => row.id == params.id);
+      appReducer.userlist.splice(index, 1);
+      forceUpdate();
+    }
+  }
+
   return (
     <div style={{ height: '89vh' }}>
       <DataGrid
@@ -59,7 +79,7 @@ const UserListComponent = ({ appReducer }) => {
         initialState={{
           columns: {
             columnVisibilityModel: {
-              // Hide columns status and traderName, the other columns will remain visible
+              // Hide column ID, the other columns will remain visible
               ID: false,
             },
           },
@@ -70,6 +90,7 @@ const UserListComponent = ({ appReducer }) => {
         sx={{ m: 2, '& .MuiDataGrid-columnHeaders': {textShadow: '0 0 black', backgroundColor: "antiquewhite" } }}
         pageSizeOptions={[5, 10, 20, 50, 100]}
         onRowClick={handleRowClick}
+        onCellClick={HandleButtons}
       />
     </div>
   );

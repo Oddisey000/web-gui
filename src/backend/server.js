@@ -9,8 +9,8 @@ const port = process.env.PORT || 3200;
 const config = {
   user: process.env.DB_USER || 'pevi5001',
   password: process.env.DB_PASSWORD || '123',
-  //server: process.env.DB_SERVER || '10.112.130.27',
-  server: process.env.DB_SERVER || 'DESKTOP-B0FAKTM\\SQLEXPRESS',
+  server: process.env.DB_SERVER || '10.112.130.27',
+  //server: process.env.DB_SERVER || 'DESKTOP-B0FAKTM\\SQLEXPRESS',
   database: process.env.DB_DATABASE || 'LSMG3'
 }
 
@@ -32,7 +32,7 @@ app.get('/authentication', (req, res) => {
 
 app.get('/getuserlist', (req, res) => {
   const query = 
-  `SELECT t1.ID as id, t1.Name AS login, t2.Description AS Role, t1.IsActive, t1.NFCcode, t1.DateCreated, t1.CreatedBy, t1.DateModified, t1.ModifiedBy, t1.Description
+  `SELECT t1.ID AS id, t1.Name AS login, t2.Description AS Role, t1.IsActive, t1.NFCcode, FORMAT(t1.DateCreated, 'dd.MM.yyyy') AS DateCreated, t1.CreatedBy, FORMAT(t1.DateModified, 'dd.MM.yyyy') AS DateModified, t1.ModifiedBy, t1.Description, t1.Role AS AccessLevel
     FROM Employee AS t1
       JOIN EmployeeRoleDefinition AS t2 ON t1.Role = t2.Role`;
   const request = new sql.Request();
