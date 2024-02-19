@@ -42,6 +42,28 @@ app.get('/getuserlist', (req, res) => {
   });
 });
 
+app.get('/updateUserData', (req, res) => {
+  const reqParams = {
+    id: req.query.id,
+    Name: req.query.login,
+    Password: req.query.password,
+    Description: req.query.Description,
+    Role: req.query.role,
+    isActive: req.query.isActive,
+    NFCcode: req.query.NFCcode,
+    ModifiedBy: req.query.ModifiedBy
+  };
+  const query = 
+  `UPDATE Employee
+	  SET Name = '${reqParams.Name}', Password = CAST('${reqParams.Password}' AS varbinary), Description = '${reqParams.Description}', Role = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+		  WHERE ID = '${reqParams.id}'`;
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+     if (err) res.status(500).send(err);
+     res.send(result);
+  });
+});
+
 sql.connect(config, err => {
   if (err) {
      console.log('Failed to open a SQL Database connection.', err.stack);

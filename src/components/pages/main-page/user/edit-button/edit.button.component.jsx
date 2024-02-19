@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import { Box, Modal, Backdrop, Typography, InputLabel, MenuItem, FormControl, Select, Grid, Button, TextField } from '@mui/material';
+import { Box, Modal, Backdrop, Typography, InputLabel, MenuItem, FormControl, Select, Grid, Button, TextField, FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -63,7 +63,8 @@ const style = {
 const EditButtonComponent = ({ appReducer, ...params }) => {
   // Handle modal window state
   const [open, setOpen] = React.useState(false);
-  const [userGroup, setuserGroup] = React.useState(params.row.Role);
+  const [isActive, setisActive] = React.useState(appReducer.configurationData.sspi);
+  const [userGroup, setuserGroup] = React.useState(params.row.Role ? params.row.Role : '');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -71,20 +72,28 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
     setuserGroup(event.target.value);
   };
 
+  const SetAccountToActive = () => {
+    setisActive(true)
+  }
+  const SetAccountToNotActive = () => {
+    setisActive(false)
+  }
+
   const HandleEdit = () => {
     const accessLevel = document.getElementById('edit-modal-select').value
     const login = document.getElementById('edit-modal-login').value
     const password = document.getElementById('edit-modal-password').value
     const nfc = document.getElementById('edit-modal-nfc').value
     const description = document.getElementById('edit-modal-description').value
-
-    console.log(password)
     
     const index = appReducer.userlist.findIndex(row => row.id == params.id);
     appReducer.userlist[index].accessLevel = accessLevel;
     appReducer.userlist[index].login = login;
-    appReducer.userlist[index].NFCcode = nfc;
     appReducer.userlist[index].Role = userGroup;
+    appReducer.userlist[index].IsActive = isActive;
+    appReducer.userlist[index].NFCcode = nfc;
+    //appReducer.userlist[index].DateModified = Date.now();
+    appReducer.userlist[index].ModifiedBy = appReducer.loggedInUser.name;
     appReducer.userlist[index].Description = description;
 
     handleClose()
@@ -123,10 +132,12 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
                       <Select
                         labelId="demo-simple-select-label"
                         id="edit-modal-select"
-                        defaultValue={userGroup}
+                        defaultValue={params.row.Role}
                         label="Access level"
                         onChange={handleChange}
                         fullWidth
+                        variant="standard" 
+                        htmlFor="uncontrolled-native"
                       >
                         <MenuItem value={'Operator'}>Operator</MenuItem>
                         <MenuItem value={'Quality Management'}>Quality Management</MenuItem>
@@ -153,6 +164,20 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
                         <TextField defaultValue={params.row.Description} id="edit-modal-description" fullWidth label="Description" variant='filled' />
                       </Grid>
                       <Grid item>
+                      <FormControl fullWidth>
+                      <Grid item>
+                        <RadioGroup
+                          id='edit-modal-isactive'
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          defaultValue={params.row.IsActive}
+                        >
+                          <FormControlLabel onClick={SetAccountToActive} value={true} control={<Radio />} label="Account active" />
+                          <FormControlLabel onClick={SetAccountToNotActive} value={false} control={<Radio />} label="Account deactivated" />
+                        </RadioGroup>
+                      </Grid>
+                      </FormControl>
                       <Button
                         type="submit"
                         fullWidth
