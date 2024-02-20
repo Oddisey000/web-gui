@@ -44,14 +44,12 @@ app.get('/getuserlist', (req, res) => {
 
 app.get('/insertUser', (req, res) => {
   const reqParams = {
-    id: req.query.data.split('/')[0],
-    Name: req.query.data.split('/')[1],
-    Password: req.query.data.split('/')[2],
-    NFCcode: req.query.data.split('/')[3],
-    Description: req.query.data.split('/')[4],
-    Role: req.query.data.split('/')[5],
-    isActive: req.query.data.split('/')[6],
-    CreatedBy: req.query.data.split('/')[7]
+    Name: req.query.data.split('/')[0],
+    Password: req.query.data.split('/')[1],
+    NFCcode: req.query.data.split('/')[2],
+    Description: req.query.data.split('/')[3],
+    Role: parseInt(req.query.data.split('/')[4]),
+    CreatedBy: req.query.data.split('/')[5]
   };
   const query = 
   `INSERT

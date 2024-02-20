@@ -2,13 +2,12 @@ import {
   SET_USER_INFO,
   SET_SERVER_CONFIG,
   SET_USER_LIST,
-  UPDATE_USER_INFO
+  CREATE_NEW_USER
 } from "./app-reducer.types";
 
 import {
   StoreUserInfo,
   GetUserList,
-  UpdateUserData,
   InsertNewUser
 } from "./app-reducer.utils";
 
@@ -27,11 +26,7 @@ export const storeUserList = (request) => ({
   payload: GetUserList(request)
 });
 
-export const updateUserInfo = (request) => ({
-  type: UPDATE_USER_INFO,
-  payload: UpdateUserData(request)
+export const createNewUser = (request) => ({
+  type: CREATE_NEW_USER,
+  payload: InsertNewUser(request)
 });
-
-export const insertUser = (request) => {
-  InsertNewUser(request)
-};

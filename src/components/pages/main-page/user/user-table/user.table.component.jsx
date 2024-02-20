@@ -61,6 +61,7 @@ const UserListComponent = ({ ...props }) => {
   const HandleButtons = (params) => {
     if (params.field == 'button-edit') {
       //alert('You clicked edit button')
+      forceUpdate();
     }
     if (params.field == 'button-delete') {
       const index = rows.findIndex(row => row.id == params.id);

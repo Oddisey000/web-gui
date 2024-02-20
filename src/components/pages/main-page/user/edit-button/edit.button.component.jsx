@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 
-import { updateUserInfo } from '../../../../../redux/app-reducer/app-reducer.actions';
+import { UpdateUserData } from '../../../../../redux/app-reducer/app-reducer.utils';
 
 // Modal window initial parameters
 const Fade = React.forwardRef(function Fade(props, ref) {
@@ -62,7 +62,7 @@ const style = {
   p: 4,
 };
 
-const EditButtonComponent = ({ appReducer, updateUserInfo, ...params }) => {
+const EditButtonComponent = ({ appReducer, ...params }) => {
   // Handle modal window state
   const [open, setOpen] = React.useState(false);
   const [isActive, setisActive] = React.useState(params.row.IsActive);
@@ -83,6 +83,7 @@ const EditButtonComponent = ({ appReducer, updateUserInfo, ...params }) => {
 
   const HandleEdit = () => {
     //const accessLevel = document.getElementById('edit-modal-select').value
+    const today = String(new Date().getDate()).padStart(2, '0') + '.' + String(new Date().getMonth() + 1).padStart(2, '0') + '.' + new Date().getFullYear();
     const login = document.getElementById('edit-modal-login').value
     const password = document.getElementById('edit-modal-password').value
     const nfc = document.getElementById('edit-modal-nfc').value
@@ -94,11 +95,11 @@ const EditButtonComponent = ({ appReducer, updateUserInfo, ...params }) => {
     appReducer.userlist[index].Role = userGroup;
     appReducer.userlist[index].IsActive = isActive;
     appReducer.userlist[index].NFCcode = nfc;
-    //appReducer.userlist[index].DateModified = Date.now();
+    appReducer.userlist[index].DateModified = today;
     appReducer.userlist[index].ModifiedBy = appReducer.loggedInUser.name;
     appReducer.userlist[index].Description = description;
 
-    updateUserInfo(`${appReducer.API_url}updateUserData?data=${'\\' + params.id + '/' + login + '/' + password + '/' + nfc + '/' + description + '/' + userGroup + '/' + isActive + '/' + appReducer.loggedInUser.name}`);
+    UpdateUserData(`${appReducer.API_url}updateUserData?data=${'\\' + params.id + '/' + login + '/' + password + '/' + nfc + '/' + description + '/' + userGroup + '/' + isActive + '/' + appReducer.loggedInUser.name}`);
     handleClose()
   }
 
@@ -213,7 +214,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateUserInfo: (request) => dispatch(updateUserInfo(request))
+    //updateUserInfo: (request) => dispatch(updateUserInfo(request))
   };
 };
 

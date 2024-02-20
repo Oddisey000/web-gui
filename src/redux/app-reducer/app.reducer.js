@@ -3,7 +3,7 @@ import {
   SET_USER_INFO,
   SET_SERVER_CONFIG,
   SET_USER_LIST,
-  UPDATE_USER_INFO
+  CREATE_NEW_USER
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -23,7 +23,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userlist: action.payload
       };
-    case UPDATE_USER_INFO:
+    case CREATE_NEW_USER:
       return {
         ...state,
         userlist: action.payload

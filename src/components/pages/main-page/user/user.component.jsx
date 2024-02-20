@@ -7,7 +7,7 @@ const UserComponent = ({ ...props }) => {
   return (
     <React.Fragment>
       <UserListComponent { ...props } />
-      <AddButtonComponent />
+      <AddButtonComponent { ...props } />
     </React.Fragment>
   );
 }

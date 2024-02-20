@@ -31,14 +31,37 @@ export const GetUserList = (request) => {
 }
 
 export const InsertNewUser = (request) => {
-  axios.get(request).then((response) => {}).catch((error) => {
-    // handle error
-    console.log(error);
-  })
+  let dataArr = [];
+  const API_url = store.getState().appReducer.API_url;
+  const requestString = request.split('\\')[1];
+  const reqParams = {
+    Name: requestString.split('/')[0],
+    Password: requestString.split('/')[1],
+    NFCcode: requestString.split('/')[2],
+    Description: requestString.split('/')[3],
+    Role: parseInt(requestString.split('/')[4]),
+    CreatedBy: requestString.split('/')[5]
+  };
+
+  console.log(reqParams)
+
+  const InsertData = () => {
+    axios.get(`${API_url}insertUser?data=${reqParams.Name + '/' + reqParams.Password + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.CreatedBy + '/' + reqParams.NFCcode}`).then((response) => {}).catch((error) => {
+      axios.get(`${API_url}getuserlist`).then((response) => {
+        response.data.recordset.map((data) => {
+          dataArr.push(data);
+          return dataArr;
+        })
+      })
+    })
+  }
+
+  InsertData()
+  return dataArr;
 }
 
 export const UpdateUserData = (request) => {
-  let dataArr = [];
+  //let dataArr = [];
   const API_url = store.getState().appReducer.API_url;
   const requestString = request.split('\\')[1];
   const reqParams = {
@@ -56,12 +79,12 @@ export const UpdateUserData = (request) => {
       response.data.recordset.map((data) => {
         reqParams.Role = data.Role
         axios.get(`${API_url}updateUserData?data=${reqParams.id + '/' + reqParams.Name + '/' + reqParams.Password + '/' + reqParams.NFCcode + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.isActive + '/' + reqParams.ModifiedBy}`).then((response) => {
-          axios.get(`${API_url}getuserlist`).then((response) => {
-            response.data.recordset.map((data) => {
-              dataArr.push(data);
-              return dataArr;
-            })
-          })
+          //axios.get(`${API_url}getuserlist`).then((response) => {
+            //response.data.recordset.map((data) => {
+              //dataArr.push(data);
+              //return dataArr;
+            //})
+          //})
         })
       })
     }).catch((error) => {
@@ -71,5 +94,5 @@ export const UpdateUserData = (request) => {
   }
 
   GetData();
-  return dataArr;
+  //return dataArr;
 }
