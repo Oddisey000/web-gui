@@ -1,3 +1,5 @@
 export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_SERVER_CONFIG = "SET_SERVER_CONFIG";
 export const SET_USER_LIST = "SET_USER_LIST";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+export const CREATE_NEW_USER = "CREATE_NEW_USER";

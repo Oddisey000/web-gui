@@ -106,7 +106,7 @@ const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
           </Grid>
         );
       case 1:
-        return(<UserComponent />)
+        return(<UserComponent { ...appReducer } />)
       case 2:
         return(<MaintenanceComponent />)
       default:

@@ -3,10 +3,10 @@ import * as React from 'react';
 import UserListComponent from './user-table/user.table.component';
 import AddButtonComponent from './add-button/add.button.component';
 
-const UserComponent = () => {
+const UserComponent = ({ ...props }) => {
   return (
     <React.Fragment>
-      <UserListComponent />
+      <UserListComponent { ...props } />
       <AddButtonComponent />
     </React.Fragment>
   );

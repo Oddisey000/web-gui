@@ -42,21 +42,63 @@ app.get('/getuserlist', (req, res) => {
   });
 });
 
-app.get('/updateUserData', (req, res) => {
+app.get('/insertUser', (req, res) => {
   const reqParams = {
-    id: req.query.id,
-    Name: req.query.login,
-    Password: req.query.password,
-    Description: req.query.Description,
-    Role: req.query.role,
-    isActive: req.query.isActive,
-    NFCcode: req.query.NFCcode,
-    ModifiedBy: req.query.ModifiedBy
+    id: req.query.data.split('/')[0],
+    Name: req.query.data.split('/')[1],
+    Password: req.query.data.split('/')[2],
+    NFCcode: req.query.data.split('/')[3],
+    Description: req.query.data.split('/')[4],
+    Role: req.query.data.split('/')[5],
+    isActive: req.query.data.split('/')[6],
+    CreatedBy: req.query.data.split('/')[7]
   };
   const query = 
-  `UPDATE Employee
-	  SET Name = '${reqParams.Name}', Password = CAST('${reqParams.Password}' AS varbinary), Description = '${reqParams.Description}', Role = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
-		  WHERE ID = '${reqParams.id}'`;
+  `INSERT
+	  INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
+	    VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', 1, '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+     if (err) res.status(500).send(err);
+     res.send(result);
+  });
+});
+
+app.get('/getusergrouperole', (req, res) => {
+  const query = 
+  `SELECT Role 
+	  FROM EmployeeRoleDefinition 
+		  WHERE Description = '${req.query.role}'`;
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+     if (err) res.status(500).send(err);
+     res.send(result);
+  });
+});
+
+app.get('/updateUserData', (req, res) => {
+  let query;
+  const reqParams = {
+    id: req.query.data.split('/')[0],
+    Name: req.query.data.split('/')[1],
+    Password: req.query.data.split('/')[2],
+    NFCcode: req.query.data.split('/')[3],
+    Description: req.query.data.split('/')[4],
+    Role: req.query.data.split('/')[5],
+    isActive: req.query.data.split('/')[6],
+    ModifiedBy: req.query.data.split('/')[7]
+  };
+  if (reqParams.Password) {
+    query = 
+    `UPDATE Employee
+      SET Name = '${reqParams.Name}', Password = CAST('${reqParams.Password}' AS varbinary), Description = '${reqParams.Description}', Role = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+        WHERE ID = '${reqParams.id}'`;
+  } else {
+    query = 
+    `UPDATE Employee
+      SET Name = '${reqParams.Name}', Description = '${reqParams.Description}', Role = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+        WHERE ID = '${reqParams.id}'`;
+  }
   const request = new sql.Request();
   request.query(query, (err, result) => {
      if (err) res.status(500).send(err);

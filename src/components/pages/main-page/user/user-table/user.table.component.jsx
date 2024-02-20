@@ -7,8 +7,8 @@ import './user.table.component.scss';
 
 import EditButtonComponent from '../edit-button/edit.button.component';
 
-const UserListComponent = ({ appReducer }) => {
-  React.useEffect(() => {rows = appReducer.userlist});
+const UserListComponent = ({ ...props }) => {
+  React.useEffect(() => {});
   const [, forceUpdate] = React.useReducer(x => x + 1, 0);
 
   // Setup table's columns parameters and buttons
@@ -35,7 +35,7 @@ const UserListComponent = ({ appReducer }) => {
   
   // Generate rows based on data from application state
   let rows = [];
-  appReducer.userlist.map(element => {
+  props.userlist.map(element => {
     let obj = {
       id: element.id,
       login: element.login,
@@ -61,13 +61,18 @@ const UserListComponent = ({ appReducer }) => {
   const HandleButtons = (params) => {
     if (params.field == 'button-edit') {
       //alert('You clicked edit button')
-      forceUpdate();
     }
     if (params.field == 'button-delete') {
       const index = rows.findIndex(row => row.id == params.id);
-      appReducer.userlist.splice(index, 1);
+      props.userlist.splice(index, 1);
       forceUpdate();
     }
+  }
+
+  if (props.userlist.length < 1) {
+    setTimeout(() => {
+      forceUpdate()
+    }, 1000);
   }
 
   return (

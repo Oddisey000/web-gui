@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 
+import { updateUserInfo } from '../../../../../redux/app-reducer/app-reducer.actions';
+
 // Modal window initial parameters
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -60,10 +62,10 @@ const style = {
   p: 4,
 };
 
-const EditButtonComponent = ({ appReducer, ...params }) => {
+const EditButtonComponent = ({ appReducer, updateUserInfo, ...params }) => {
   // Handle modal window state
   const [open, setOpen] = React.useState(false);
-  const [isActive, setisActive] = React.useState(appReducer.configurationData.sspi);
+  const [isActive, setisActive] = React.useState(params.row.IsActive);
   const [userGroup, setuserGroup] = React.useState(params.row.Role ? params.row.Role : '');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -80,14 +82,14 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
   }
 
   const HandleEdit = () => {
-    const accessLevel = document.getElementById('edit-modal-select').value
+    //const accessLevel = document.getElementById('edit-modal-select').value
     const login = document.getElementById('edit-modal-login').value
     const password = document.getElementById('edit-modal-password').value
     const nfc = document.getElementById('edit-modal-nfc').value
     const description = document.getElementById('edit-modal-description').value
     
     const index = appReducer.userlist.findIndex(row => row.id == params.id);
-    appReducer.userlist[index].accessLevel = accessLevel;
+    //appReducer.userlist[index].accessLevel = accessLevel;
     appReducer.userlist[index].login = login;
     appReducer.userlist[index].Role = userGroup;
     appReducer.userlist[index].IsActive = isActive;
@@ -96,6 +98,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
     appReducer.userlist[index].ModifiedBy = appReducer.loggedInUser.name;
     appReducer.userlist[index].Description = description;
 
+    updateUserInfo(`${appReducer.API_url}updateUserData?data=${'\\' + params.id + '/' + login + '/' + password + '/' + nfc + '/' + description + '/' + userGroup + '/' + isActive + '/' + appReducer.loggedInUser.name}`);
     handleClose()
   }
 
@@ -104,7 +107,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Modal
           aria-labelledby="spring-modal-title"
           aria-describedby="spring-modal-description"
@@ -197,7 +200,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
         </Fade>
       </Modal>
         <Button onClick={LoadUserData} variant="outlined" color="success">Edit</Button>
-    </React.Fragment>
+    </>
   );
 }
 
@@ -209,7 +212,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    updateUserInfo: (request) => dispatch(updateUserInfo(request))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditButtonComponent);
