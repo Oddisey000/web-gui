@@ -46,14 +46,16 @@ export const InsertNewUser = (request) => {
   console.log(reqParams)
 
   const InsertData = () => {
-    axios.get(`${API_url}insertUser?data=${reqParams.Name + '/' + reqParams.Password + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.CreatedBy + '/' + reqParams.NFCcode}`).then((response) => {}).catch((error) => {
+    axios.get(`${API_url}insertUser?data=${reqParams.Name + '/' + reqParams.Password + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.CreatedBy + '/' + reqParams.NFCcode}`);
+    
+    setTimeout(() => {
       axios.get(`${API_url}getuserlist`).then((response) => {
         response.data.recordset.map((data) => {
           dataArr.push(data);
           return dataArr;
         })
       })
-    })
+    }, 1000);
   }
 
   InsertData()

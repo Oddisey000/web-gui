@@ -79,6 +79,7 @@ const FloatingActionButtons = ({ createNewUser, ...props }) => {
     const nfc = document.getElementById('NFC/RFID_field_registration').value
     const description = document.getElementById('description_field_registration').value
 
+    console.log('button pressed')
     createNewUser(`${props.API_url}updateUserData?data=${'\\' + login + '/' + password + '/' + nfc + '/' + description + '/' + userGroup + '/' + props.loggedInUser.name}`);
     handleClose()
   }

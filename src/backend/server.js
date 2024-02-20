@@ -9,8 +9,8 @@ const port = process.env.PORT || 3200;
 const config = {
   user: process.env.DB_USER || 'pevi5001',
   password: process.env.DB_PASSWORD || '123',
-  server: process.env.DB_SERVER || '10.112.130.27',
-  //server: process.env.DB_SERVER || 'DESKTOP-B0FAKTM\\SQLEXPRESS',
+  //server: process.env.DB_SERVER || '10.112.130.27',
+  server: process.env.DB_SERVER || 'DESKTOP-B0FAKTM\\SQLEXPRESS',
   database: process.env.DB_DATABASE || 'LSMG3'
 }
 
@@ -46,15 +46,15 @@ app.get('/insertUser', (req, res) => {
   const reqParams = {
     Name: req.query.data.split('/')[0],
     Password: req.query.data.split('/')[1],
-    NFCcode: req.query.data.split('/')[2],
-    Description: req.query.data.split('/')[3],
-    Role: parseInt(req.query.data.split('/')[4]),
-    CreatedBy: req.query.data.split('/')[5]
+    NFCcode: req.query.data.split('/')[5],
+    Description: req.query.data.split('/')[2],
+    Role: req.query.data.split('/')[3],
+    CreatedBy: req.query.data.split('/')[4]
   };
+  console.log(reqParams)
   const query = 
-  `INSERT
-	  INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
-	    VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', 1, '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
+  `INSERT INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
+	    VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
   const request = new sql.Request();
   request.query(query, (err, result) => {
      if (err) res.status(500).send(err);

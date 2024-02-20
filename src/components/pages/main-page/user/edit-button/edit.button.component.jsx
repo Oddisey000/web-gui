@@ -66,7 +66,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
   // Handle modal window state
   const [open, setOpen] = React.useState(false);
   const [isActive, setisActive] = React.useState(params.row.IsActive);
-  const [userGroup, setuserGroup] = React.useState(params.row.Role ? params.row.Role : '');
+  const [userGroup, setuserGroup] = React.useState(params.row.Role);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
