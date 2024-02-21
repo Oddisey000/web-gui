@@ -41,7 +41,7 @@ const defaultTheme = createTheme();
 
 const MainPage = ({ appReducer, storeUserInfo, storeUserList }) => {
   React.useEffect(() => {
-    if (appReducer.loggedInUser.name == '') { navigate('/') }
+    if (appReducer.loggedInUser.name === '') { navigate('/') }
   });
   // Define starting point based on user account role level
   const startComponent = () => {

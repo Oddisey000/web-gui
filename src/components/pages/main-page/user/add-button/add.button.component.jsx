@@ -79,7 +79,6 @@ const FloatingActionButtons = ({ createNewUser, ...props }) => {
     const nfc = document.getElementById('NFC/RFID_field_registration').value
     const description = document.getElementById('description_field_registration').value
 
-    console.log('button pressed')
     createNewUser(`${props.API_url}updateUserData?data=${'\\' + login + '/' + password + '/' + nfc + '/' + description + '/' + userGroup + '/' + props.loggedInUser.name}`);
     handleClose()
   }
@@ -104,7 +103,7 @@ const FloatingActionButtons = ({ createNewUser, ...props }) => {
               <Typography sx={{color: 'brown'}} className='modal_title' variant="h6" component="h2">
                 REGISTRATION:
               </Typography>
-              <Typography id="spring-modal-description" sx={{ mt: 2 }}>
+              <Typography component={'span'} id="spring-modal-description" sx={{ mt: 2 }}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                   <Grid container direction={"column"} spacing={4}>
@@ -144,7 +143,6 @@ const FloatingActionButtons = ({ createNewUser, ...props }) => {
                       </Grid>
                       <Grid item>
                       <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}

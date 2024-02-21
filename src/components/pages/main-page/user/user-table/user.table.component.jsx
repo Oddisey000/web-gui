@@ -7,6 +7,8 @@ import './user.table.component.scss';
 
 import EditButtonComponent from '../edit-button/edit.button.component';
 
+import { DeleteUser } from '../../../../../redux/app-reducer/app-reducer.utils';
+
 const UserListComponent = ({ ...props }) => {
   React.useEffect(() => {});
   const [, forceUpdate] = React.useReducer(x => x + 1, 0);
@@ -52,7 +54,6 @@ const UserListComponent = ({ ...props }) => {
     rows.push(obj);
     return rows;
   })
-  console.log(rows)
 
   const handleRowClick = (params) => {
     //appReducer.userlist.splice(params.id - 1, 1);
@@ -60,12 +61,13 @@ const UserListComponent = ({ ...props }) => {
   }
 
   const HandleButtons = (params) => {
-    if (params.field == 'button-edit') {
+    if (params.field === 'button-edit') {
       //alert('You clicked edit button')
       forceUpdate();
     }
-    if (params.field == 'button-delete') {
-      const index = rows.findIndex(row => row.id == params.id);
+    if (params.field === 'button-delete') {
+      const index = rows.findIndex(row => row.id === params.id);
+      DeleteUser(params.id)
       props.userlist.splice(index, 1);
       forceUpdate();
     }
@@ -91,7 +93,7 @@ const UserListComponent = ({ ...props }) => {
             },
           },
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 50 },
           },
         }}
         sx={{ m: 2, '& .MuiDataGrid-columnHeaders': {textShadow: '0 0 black', backgroundColor: "antiquewhite" } }}

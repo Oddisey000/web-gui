@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import { Box, Modal, Backdrop, Typography, InputLabel, MenuItem, FormControl, Select, Grid, Button, TextField, FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { Box, Modal, Backdrop, Typography, InputLabel, MenuItem, FormControl, Select, Grid, Button, TextField, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import { useSpring, animated } from '@react-spring/web';
 import PropTypes from 'prop-types';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -89,8 +89,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
     const nfc = document.getElementById('edit-modal-nfc').value
     const description = document.getElementById('edit-modal-description').value
     
-    const index = appReducer.userlist.findIndex(row => row.id == params.id);
-    //appReducer.userlist[index].accessLevel = accessLevel;
+    const index = appReducer.userlist.findIndex(row => row.id === params.id);
     appReducer.userlist[index].login = login;
     appReducer.userlist[index].Role = userGroup;
     appReducer.userlist[index].IsActive = isActive;
@@ -108,7 +107,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
   }
 
   return (
-    <>
+    <React.Fragment>
       <Modal
           aria-labelledby="spring-modal-title"
           aria-describedby="spring-modal-description"
@@ -124,10 +123,10 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
         >
         <Fade in={open}>
         <Box sx={style}>
-              <Typography sx={{color: '#2e7d32'}} className='modal_title' variant="h6" component="h2">
+              <Typography component="h2" sx={{color: '#2e7d32'}} className='modal_title' variant="h6">
                 EDIT USER DATA:
               </Typography>
-              <Typography id="spring-modal-description" sx={{ mt: 2 }}>
+              <Typography component={'span'} id="spring-modal-description" sx={{ mt: 2 }}>
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                   <Grid container direction={"column"} spacing={4}>
@@ -183,7 +182,6 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
                       </Grid>
                       </FormControl>
                       <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="success"
@@ -201,7 +199,7 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
         </Fade>
       </Modal>
         <Button onClick={LoadUserData} variant="outlined" color="success">Edit</Button>
-    </>
+    </React.Fragment>
   );
 }
 

@@ -43,11 +43,8 @@ export const InsertNewUser = (request) => {
     CreatedBy: requestString.split('/')[5]
   };
 
-  console.log(reqParams)
-
   const InsertData = () => {
     axios.get(`${API_url}insertUser?data=${reqParams.Name + '/' + reqParams.Password + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.CreatedBy + '/' + reqParams.NFCcode}`);
-    
     setTimeout(() => {
       axios.get(`${API_url}getuserlist`).then((response) => {
         response.data.recordset.map((data) => {
@@ -57,13 +54,20 @@ export const InsertNewUser = (request) => {
       })
     }, 1000);
   }
-
   InsertData()
   return dataArr;
 }
 
+export const DeleteUser = (id) => {
+  const API_url = store.getState().appReducer.API_url;
+  axios.get(`${API_url}deleteuser?id=${id}`).then((response) => {
+    // response was ok
+  }).catch((error) => {
+    console.log(error)
+  })
+};
+
 export const UpdateUserData = (request) => {
-  //let dataArr = [];
   const API_url = store.getState().appReducer.API_url;
   const requestString = request.split('\\')[1];
   const reqParams = {
@@ -77,17 +81,12 @@ export const UpdateUserData = (request) => {
     ModifiedBy: requestString.split('/')[7]
   };
 
-  const GetData = () => {axios.get(`${API_url}getusergrouperole?role=${reqParams.Role}`).then((response) => {
+  const GetData = () => {
+    axios.get(`${API_url}getusergrouperole?role=${reqParams.Role}`).then((response) => {
       response.data.recordset.map((data) => {
         reqParams.Role = data.Role
-        axios.get(`${API_url}updateUserData?data=${reqParams.id + '/' + reqParams.Name + '/' + reqParams.Password + '/' + reqParams.NFCcode + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.isActive + '/' + reqParams.ModifiedBy}`).then((response) => {
-          //axios.get(`${API_url}getuserlist`).then((response) => {
-            //response.data.recordset.map((data) => {
-              //dataArr.push(data);
-              //return dataArr;
-            //})
-          //})
-        })
+        axios.get(`${API_url}updateUserData?data=${reqParams.id + '/' + reqParams.Name + '/' + reqParams.Password + '/' + reqParams.NFCcode + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.isActive + '/' + reqParams.ModifiedBy}`).then((response) => {})
+        return reqParams
       })
     }).catch((error) => {
       // handle error
@@ -96,5 +95,4 @@ export const UpdateUserData = (request) => {
   }
 
   GetData();
-  //return dataArr;
 }
