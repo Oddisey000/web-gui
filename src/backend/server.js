@@ -67,9 +67,15 @@ app.get('/insertUser', (req, res) => {
      if (result.recordset[0]) {
       // such user already exists in database
      } else {
-      query = 
-      `INSERT INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
+      if (reqParams.NFCcode) {
+        query = 
+        `INSERT INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
           VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
+        } else {
+          query = 
+          `INSERT INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
+            VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', NULL, NULL)`;
+      }
       request = new sql.Request();
       request.query(query, (err, result) => {
         if (err) res.status(500).send(err);
