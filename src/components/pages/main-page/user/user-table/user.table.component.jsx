@@ -17,7 +17,7 @@ const UserListComponent = ({ ...props }) => {
   const columns = [
     { field: 'ID', headerName: 'ID', hide: true },
     { field: 'login', headerName: 'Login' },
-    { field: 'RoleID', headerName: 'User role', width: 130 },
+    { field: 'Role', headerName: 'User role', width: 130 },
     { field: 'IsActive', headerName: 'Active user' },
     { field: 'NFCcode', headerName: 'NFC/RFID code', width: 120 },
     { field: 'DateCreated', headerName: 'Created on', width: 100 },
@@ -41,7 +41,7 @@ const UserListComponent = ({ ...props }) => {
     let obj = {
       id: element.id,
       login: element.login,
-      Role: element.RoleID,
+      Role: element.Role,
       IsActive: element.IsActive,
       NFCcode: element.NFCcode,
       DateCreated: element.DateCreated,
@@ -54,6 +54,7 @@ const UserListComponent = ({ ...props }) => {
     rows.push(obj);
     return rows;
   })
+  console.log(rows);
 
   const handleRowClick = (params) => {
     //appReducer.userlist.splice(params.id - 1, 1);

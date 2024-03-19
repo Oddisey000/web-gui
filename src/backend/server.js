@@ -2,6 +2,7 @@ const express = require('express');
 const sql = require('mssql/msnodesqlv8');
 const cors = require('cors');
 const path = require("path");
+const MD5 = require("crypto-js/md5");
 
 const app = express();
 const port = process.env.PORT || 3200;
@@ -22,7 +23,7 @@ app.get('/authentication', (req, res) => {
     userName: req.query.login,
     userPassword: req.query.password
   };
-  const query = `SELECT Name, RoleID FROM Employee WHERE Name = '${reqParams.userName}' AND Password = CAST('${reqParams.userPassword}' as varbinary)`;
+  const query = `SELECT Name, RoleID FROM Employee WHERE Name = '${reqParams.userName}' AND Password = '${MD5(reqParams.userPassword)}'`;
   const request = new sql.Request();
   request.query(query, (err, result) => {
      if (err) res.status(500).send(err);
@@ -70,11 +71,11 @@ app.get('/insertUser', (req, res) => {
       if (reqParams.NFCcode) {
         query = 
         `INSERT INTO Employee (Name, Password, Description, RoleID, IsActive, CreatedBy, NFCcode, DateModified)
-          VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
+          VALUES ('${reqParams.Name}', '${MD5(reqParams.Password)}', '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
         } else {
           query = 
           `INSERT INTO Employee (Name, Password, Description, RoleID, IsActive, CreatedBy, NFCcode, DateModified)
-            VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', NULL, NULL)`;
+            VALUES ('${reqParams.Name}', '${MD5(reqParams.Password)}', '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', NULL, NULL)`;
       }
       request = new sql.Request();
       request.query(query, (err, result) => {
@@ -88,7 +89,7 @@ app.get('/insertUser', (req, res) => {
 app.get('/getusergrouperole', (req, res) => {
   const query = 
   `SELECT RoleID 
-	  FROM EmployeeRoleDefinition 
+	  FROM EmployeeRoleToLetasFunction 
 		  WHERE Description = '${req.query.role}'`;
   const request = new sql.Request();
   request.query(query, (err, result) => {
@@ -110,15 +111,29 @@ app.get('/updateUserData', (req, res) => {
     ModifiedBy: req.query.data.split('/')[7]
   };
   if (reqParams.Password) {
-    query = 
-    `UPDATE Employee
-      SET Name = '${reqParams.Name}', Password = CAST('${reqParams.Password}' AS varbinary), Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
-        WHERE ID = '${reqParams.id}'`;
+    if (reqParams.NFCcode) {
+      query = 
+      `UPDATE Employee
+        SET Name = '${reqParams.Name}', Password = '${MD5(reqParams.Password)}', Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+          WHERE ID = '${reqParams.id}'`;
+    } else {
+      query = 
+      `UPDATE Employee
+        SET Name = '${reqParams.Name}', Password = '${MD5(reqParams.Password)}', Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+          WHERE ID = '${reqParams.id}'`;
+    }
   } else {
-    query = 
-    `UPDATE Employee
-      SET Name = '${reqParams.Name}', Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
-        WHERE ID = '${reqParams.id}'`;
+    if (reqParams.NFCcode) {
+      query = 
+      `UPDATE Employee
+        SET Name = '${reqParams.Name}', Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+          WHERE ID = '${reqParams.id}'`;
+    } else {
+      query = 
+      `UPDATE Employee
+        SET Name = '${reqParams.Name}', Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+          WHERE ID = '${reqParams.id}'`;
+    }
   }
   const request = new sql.Request();
   request.query(query, (err, result) => {
