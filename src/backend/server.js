@@ -22,7 +22,7 @@ app.get('/authentication', (req, res) => {
     userName: req.query.login,
     userPassword: req.query.password
   };
-  const query = `SELECT Name, Role FROM Employee WHERE Name = '${reqParams.userName}' AND Password = CAST('${reqParams.userPassword}' as varbinary)`;
+  const query = `SELECT Name, RoleID FROM Employee WHERE Name = '${reqParams.userName}' AND Password = CAST('${reqParams.userPassword}' as varbinary)`;
   const request = new sql.Request();
   request.query(query, (err, result) => {
      if (err) res.status(500).send(err);
@@ -32,9 +32,9 @@ app.get('/authentication', (req, res) => {
 
 app.get('/getuserlist', (req, res) => {
   const query = 
-  `SELECT t1.ID AS id, t1.Name AS login, t2.Description AS Role, t1.IsActive, t1.NFCcode, FORMAT(t1.DateCreated, 'dd.MM.yyyy') AS DateCreated, t1.CreatedBy, FORMAT(t1.DateModified, 'dd.MM.yyyy') AS DateModified, t1.ModifiedBy, t1.Description, t1.Role AS AccessLevel
+  `SELECT t1.ID AS id, t1.Name AS login, t2.Description AS Role, t1.IsActive, t1.NFCcode, FORMAT(t1.DateCreated, 'dd.MM.yyyy') AS DateCreated, t1.CreatedBy, FORMAT(t1.DateModified, 'dd.MM.yyyy') AS DateModified, t1.ModifiedBy, t1.Description, t1.RoleID AS AccessLevel
     FROM Employee AS t1
-      JOIN EmployeeRoleDefinition AS t2 ON t1.Role = t2.Role`;
+      JOIN EmployeeRoleToLetasFunction AS t2 ON t1.RoleID = t2.RoleID`;
   const request = new sql.Request();
   request.query(query, (err, result) => {
      if (err) res.status(500).send(err);
@@ -69,11 +69,11 @@ app.get('/insertUser', (req, res) => {
      } else {
       if (reqParams.NFCcode) {
         query = 
-        `INSERT INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
+        `INSERT INTO Employee (Name, Password, Description, RoleID, IsActive, CreatedBy, NFCcode, DateModified)
           VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', '${reqParams.NFCcode}', NULL)`;
         } else {
           query = 
-          `INSERT INTO Employee (Name, Password, Description, Role, IsActive, CreatedBy, NFCcode, DateModified)
+          `INSERT INTO Employee (Name, Password, Description, RoleID, IsActive, CreatedBy, NFCcode, DateModified)
             VALUES ('${reqParams.Name}', CAST('${reqParams.Password}' AS varbinary), '${reqParams.Description}', '${reqParams.Role}', '1', '${reqParams.CreatedBy}', NULL, NULL)`;
       }
       request = new sql.Request();
@@ -87,7 +87,7 @@ app.get('/insertUser', (req, res) => {
 
 app.get('/getusergrouperole', (req, res) => {
   const query = 
-  `SELECT Role 
+  `SELECT RoleID 
 	  FROM EmployeeRoleDefinition 
 		  WHERE Description = '${req.query.role}'`;
   const request = new sql.Request();
@@ -112,12 +112,12 @@ app.get('/updateUserData', (req, res) => {
   if (reqParams.Password) {
     query = 
     `UPDATE Employee
-      SET Name = '${reqParams.Name}', Password = CAST('${reqParams.Password}' AS varbinary), Description = '${reqParams.Description}', Role = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+      SET Name = '${reqParams.Name}', Password = CAST('${reqParams.Password}' AS varbinary), Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
         WHERE ID = '${reqParams.id}'`;
   } else {
     query = 
     `UPDATE Employee
-      SET Name = '${reqParams.Name}', Description = '${reqParams.Description}', Role = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
+      SET Name = '${reqParams.Name}', Description = '${reqParams.Description}', RoleID = '${reqParams.Role}', IsActive = '${reqParams.isActive}', NFCcode = '${reqParams.NFCcode}', DateModified = GETDATE(), ModifiedBy = '${reqParams.ModifiedBy}'
         WHERE ID = '${reqParams.id}'`;
   }
   const request = new sql.Request();

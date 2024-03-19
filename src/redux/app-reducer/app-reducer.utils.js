@@ -7,7 +7,7 @@ export const StoreUserInfo = (request) => {
     try {
       const response = await axios.get(request);
       loggedInUser.name = response.data.recordset[0].Name
-      loggedInUser.role = response.data.recordset[0].Role
+      loggedInUser.role = response.data.recordset[0].RoleID
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +84,7 @@ export const UpdateUserData = (request) => {
   const GetData = () => {
     axios.get(`${API_url}getusergrouperole?role=${reqParams.Role}`).then((response) => {
       response.data.recordset.map((data) => {
-        reqParams.Role = data.Role
+        reqParams.Role = data.RoleID
         axios.get(`${API_url}updateUserData?data=${reqParams.id + '/' + reqParams.Name + '/' + reqParams.Password + '/' + reqParams.NFCcode + '/' + reqParams.Description + '/' + reqParams.Role + '/' + reqParams.isActive + '/' + reqParams.ModifiedBy}`).then((response) => {})
         return reqParams
       })
