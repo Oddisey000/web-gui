@@ -117,12 +117,9 @@ const FloatingActionButtons = ({ createNewUser, ...props }) => {
                         onChange={handleChange}
                         fullWidth
                       >
-                        <MenuItem value={5}>Operator</MenuItem>
-                        <MenuItem value={4}>Quality Management</MenuItem>
-                        <MenuItem value={3}>Team Leader</MenuItem>
-                        <MenuItem value={2}>Technician</MenuItem>
-                        <MenuItem value={1}>Process Expert</MenuItem>
-                        <MenuItem value={0}>Administrator</MenuItem>
+                        {props.userGroupList.map(data => {
+                          return(<MenuItem key={data.RoleID} value={data.RoleID}>{data.Description}</MenuItem>)
+                        })}
                       </Select>
                       </Grid>
                       <Grid sx={{display: 'flex'}} item>

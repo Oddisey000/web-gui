@@ -3,7 +3,8 @@ import {
   SET_USER_INFO,
   SET_SERVER_CONFIG,
   SET_USER_LIST,
-  CREATE_NEW_USER
+  CREATE_NEW_USER,
+  GET_USER_GROUP_LIST
 } from "./app-reducer.types";
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +29,11 @@ const appReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userlist: action.payload
       };
+    case GET_USER_GROUP_LIST:
+      return {
+        ...state,
+        userGroupList: action.payload
+      }
     default:
       return state;
   }

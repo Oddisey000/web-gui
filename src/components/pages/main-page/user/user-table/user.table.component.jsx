@@ -54,7 +54,6 @@ const UserListComponent = ({ ...props }) => {
     rows.push(obj);
     return rows;
   })
-  console.log(rows);
 
   const handleRowClick = (params) => {
     //appReducer.userlist.splice(params.id - 1, 1);

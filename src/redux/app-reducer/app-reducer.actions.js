@@ -2,13 +2,15 @@ import {
   SET_USER_INFO,
   SET_SERVER_CONFIG,
   SET_USER_LIST,
-  CREATE_NEW_USER
+  CREATE_NEW_USER,
+  GET_USER_GROUP_LIST
 } from "./app-reducer.types";
 
 import {
   StoreUserInfo,
   GetUserList,
-  InsertNewUser
+  InsertNewUser,
+  GetUserGroupList
 } from "./app-reducer.utils";
 
 export const storeUserInfo = (request) => ({
@@ -29,4 +31,9 @@ export const storeUserList = (request) => ({
 export const createNewUser = (request) => ({
   type: CREATE_NEW_USER,
   payload: InsertNewUser(request)
+});
+
+export const getUserGroupList = (request) => ({
+  type: GET_USER_GROUP_LIST,
+  payload: GetUserGroupList(request)
 });

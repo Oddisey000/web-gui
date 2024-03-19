@@ -142,12 +142,9 @@ const EditButtonComponent = ({ appReducer, ...params }) => {
                         variant="standard" 
                         htmlFor="uncontrolled-native"
                       >
-                        <MenuItem value={'Operator'}>Operator</MenuItem>
-                        <MenuItem value={'Quality Management'}>Quality Management</MenuItem>
-                        <MenuItem value={'Team Leader'}>Team Leader</MenuItem>
-                        <MenuItem value={'Technician'}>Technician</MenuItem>
-                        <MenuItem value={'Process Expert'}>Process Expert</MenuItem>
-                        <MenuItem value={'Administrator'}>Administrator</MenuItem>
+                        {appReducer.userGroupList.map(data => {
+                          return(<MenuItem key={data.RoleID} value={data.Description}>{data.Description}</MenuItem>)
+                        })}
                       </Select>
                       </Grid>
                       <Grid sx={{display: 'flex'}} item>

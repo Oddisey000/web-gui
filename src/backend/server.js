@@ -43,6 +43,15 @@ app.get('/getuserlist', (req, res) => {
   });
 });
 
+app.get('/getusergrouplist', (req, res) => {
+  const query = `SELECT RoleID, Description FROM EmployeeRoleToLetasFunction`;
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+     if (err) res.status(500).send(err);
+     res.send(result);
+  });
+});
+
 app.get('/deleteuser', (req, res) => {
   const query = `DELETE FROM Employee WHERE id = '${req.query.id}'`;
   const request = new sql.Request();

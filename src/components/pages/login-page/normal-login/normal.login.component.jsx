@@ -9,7 +9,7 @@ import { useSpring, animated } from '@react-spring/web';
 
 import './normal.login.component.scss';
 
-import { storeUserInfo, storeUserList } from '../../../../redux/app-reducer/app-reducer.actions';
+import { storeUserInfo, storeUserList, getUserGroupList } from '../../../../redux/app-reducer/app-reducer.actions';
 
 // A variable which represent different error messages in modal window
 let modalErrorMsg = '';
@@ -75,7 +75,7 @@ const style = {
   p: 4,
 };
 
-const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
+const NormalLogin = ({ appReducer, storeUserInfo, storeUserList, getUserGroupList }) => {
   React.useEffect(() => {HandleRedirect()});
 
   // Initial state of error modal window
@@ -99,6 +99,7 @@ const NormalLogin = ({ appReducer, storeUserInfo, storeUserList }) => {
     function doStuff() {
       if (appReducer.loggedInUser.name) {
         storeUserList(`${appReducer.API_url}getuserlist`);
+        getUserGroupList(`${appReducer.API_url}getusergrouplist`);
         if (appReducer.userlist) {
           clearInterval(interval)
           setTimeout(() => {
@@ -240,7 +241,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     storeUserInfo: (request) => dispatch(storeUserInfo(request)),
-    storeUserList: (request) => dispatch(storeUserList(request))
+    storeUserList: (request) => dispatch(storeUserList(request)),
+    getUserGroupList: (request) => dispatch(getUserGroupList(request))
   };
 };
 

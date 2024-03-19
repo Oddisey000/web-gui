@@ -30,6 +30,20 @@ export const GetUserList = (request) => {
   return dataArr;
 }
 
+export const GetUserGroupList = (request) => {
+  let dataArr = [];
+  axios.get(request).then((response) => {
+    response.data.recordset.map((data) => {
+      dataArr.push(data);
+      return dataArr;
+    })
+  }).catch((error) => {
+    // handle error
+    console.log(error);
+  })
+  return dataArr;
+}
+
 export const InsertNewUser = (request) => {
   let dataArr = [];
   const API_url = store.getState().appReducer.API_url;
